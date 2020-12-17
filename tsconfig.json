@@ -1,0 +1,19 @@
+{
+    "compilerOptions":{
+        "module":"Commonjs",
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "sourceMap": true
+    },
+    "files": [
+        "server/App.ts",
+        "server/src/www.ts",
+        "server/router",
+        "server/model/dbcon.ts",
+        "server/model",
+        "server/middleware",
+        "server/api"
+        
+    ]
+}
