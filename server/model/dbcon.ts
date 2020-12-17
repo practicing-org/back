@@ -1,5 +1,5 @@
 import { Sequelize } from "sequelize";
-import config from './config.json';//db, user, password, port, host
+import config from './config.json';
 
 const sequelize = new Sequelize(
     config.db_server.database,
@@ -11,11 +11,10 @@ const sequelize = new Sequelize(
     }
 )
 
-let db = {};
+let db:{[k:string]:any} = {};
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
-
 //table
 
 
