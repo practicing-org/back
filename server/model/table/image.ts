@@ -1,4 +1,4 @@
-module.exports = (sequelize, datatypes)=>{
+const File = (sequelize:any, datatypes:any)=>{
     const file = sequelize.define('file',{
         filename:{
             field:'filename',
@@ -48,3 +48,5 @@ module.exports = (sequelize, datatypes)=>{
     })
     return file;
 }
+
+export default File;

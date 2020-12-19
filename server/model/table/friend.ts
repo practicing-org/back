@@ -1,4 +1,4 @@
-module.exports = (sequelize, datatypes)=>{
+const Friend = (sequelize:any, datatypes:any)=>{
     const friend = sequelize.define('friend',{
         friendId:{
             field:"friendId",
@@ -24,7 +24,7 @@ module.exports = (sequelize, datatypes)=>{
         },
         friend:{
             field:"friend",
-            type:datatypes.String(30),
+            type:datatypes.STRING(30),
             allowNull:false,
             references:{
                 model:'user',
@@ -39,3 +39,5 @@ module.exports = (sequelize, datatypes)=>{
     })
     return friend;
 }
+
+export default Friend;

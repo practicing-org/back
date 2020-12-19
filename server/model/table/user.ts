@@ -1,4 +1,4 @@
-module.exports =(sequelize, DataTypes)=>{
+const User = (sequelize:any, DataTypes:any)=>{
     const user = sequelize.define('user',{
         userId:{
             field:"userId",
@@ -26,3 +26,5 @@ module.exports =(sequelize, DataTypes)=>{
     })
     return user;
 }
+
+export default User;

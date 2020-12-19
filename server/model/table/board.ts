@@ -1,4 +1,4 @@
-module.exports = (sequelize, datatypes)=>{
+const Board = (sequelize:any, datatypes:any)=>{
     const board = sequelize.define('board',{
         boardId:{
             field:'boardId',
@@ -12,14 +12,14 @@ module.exports = (sequelize, datatypes)=>{
             allowNull:false,
             references:{
                 model:'user',
-                key:"useId",
+                key:"userId",
                 onDeleted:'cascade',
                 onUpdate:'cascade',
             }
         },
         date:{
             field:'date',
-            type:datatypes.date,
+            type:datatypes.DATE,
             allowNull:false,
         },
         contents:{
@@ -33,3 +33,5 @@ module.exports = (sequelize, datatypes)=>{
     })
     return board;
 }
+
+export default Board;

@@ -1,4 +1,4 @@
-module.exports = (sequelize, datatypes)=>{
+const Comments = (sequelize:any, datatypes:any)=>{
     const comments = sequelize.define('comments',{
         commentsId:{
             field:'commentsId',
@@ -20,12 +20,7 @@ module.exports = (sequelize, datatypes)=>{
         FCommentsId:{
             field:'FCommentsId',
             type:datatypes.BIGINT,
-            references:{
-                model:'comments',
-                key:'commentsId',
-                onDeleted:'cascade',
-                onUpdate:'cascade'
-            }
+            
         },
         userId:{
             field:'userId',
@@ -48,3 +43,5 @@ module.exports = (sequelize, datatypes)=>{
     })
     return comments
 }
+
+export default Comments;

@@ -1,4 +1,4 @@
-module.exports = (sequelize, datatypes)=>{
+const Like = (sequelize:any, datatypes:any)=>{
     const like = sequelize.define('like',{
         likeId:{
             field:'likeId',
@@ -43,3 +43,4 @@ module.exports = (sequelize, datatypes)=>{
     })
     return like;
 }
+export default Like;
