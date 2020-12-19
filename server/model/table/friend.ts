@@ -1,7 +1,7 @@
 module.exports = (sequelize, datatypes)=>{
     const friend = sequelize.define('friend',{
         friendId:{
-            field:"id",
+            field:"friendId",
             type:datatypes.BIGINT,
             autoIncrement:true,
             primaryKey:true

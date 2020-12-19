@@ -1,7 +1,7 @@
 module.exports = (sequelize, datatypes)=>{
     const board = sequelize.define('board',{
         boardId:{
-            field:'id',
+            field:'boardId',
             type:datatypes.BIGINT,
             autoIncrement: true,
             primaryKey: true
