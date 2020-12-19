@@ -1,5 +1,5 @@
 import {Request, Response, NextFunction} from 'express';
-import db from '../../model/dbcon';
+import db from '../../../model/dbcon';
 
 export default async (req:Request, res:Response, next:NextFunction)=>{
     const {userId, hashPassword, name, birthday} = req.body;
