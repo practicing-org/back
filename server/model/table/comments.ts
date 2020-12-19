@@ -17,11 +17,6 @@ const Comments = (sequelize:any, datatypes:any)=>{
                 onUpdate:'cascade',
             }
         },
-        FCommentsId:{
-            field:'FCommentsId',
-            type:datatypes.BIGINT,
-            
-        },
         userId:{
             field:'userId',
             type:datatypes.STRING(30),

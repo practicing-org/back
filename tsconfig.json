@@ -12,7 +12,6 @@
         "server/App.ts",
         "server/src/www.ts",
         "server/model/dbcon.ts",
-        "server/router/hellorouter.ts",
-        "server/api/hello/hello.ts"
+
     ]
 }

@@ -1,4 +1,4 @@
-import { Sequelize } from "sequelize";
+import { Sequelize } from 'sequelize';
 import config from './config.json';
 
 
@@ -35,9 +35,6 @@ db.like = Like(db.sequelize, db.Sequelize);
 db.image = Image(db.sequelize, db.Sequelize);
 
 
-// db.sequelize.query('alter table comments add foreign key(FCommentsId) references comments(commentsId)');
-//
-
 //relationship
 db.user.hasMany(db.friend,{
     foreignKey:'userId'
@@ -64,7 +61,7 @@ db.user.hasMany(db.comments,{
     foreignKey:'userId'
 })
 db.comments.hasMany(db.comments,{
-    foreignKey:'commentsId'
+    foreignKey:'FcommentsId'
 })
 
 db.user.hasMany(db.like,{
@@ -79,12 +76,12 @@ db.comments.hasMany(db.like,{
 
 //
 
-module.exports = db;
+export default db;
 
 sequelize.sync()
     .then(()=>{
         console.log('database sync');
     })
-    .catch((err)=>{
+    .catch((err:any)=>{
         console.log(err);
     })

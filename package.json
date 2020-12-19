@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start" : "nodemon --watch src --delay 1 --exec ts-node server/src/www.ts",
-    "build" : "webpack --config webpack.config.js"
+    "start": "ts-node server/src/www.ts",
+    "build": "webpack --config webpack.config.js"
   },
   "keywords": [],
   "author": "",
@@ -20,7 +20,13 @@
     "webpack-cli": "^4.2.0"
   },
   "dependencies": {
+    "@types/cors": "^2.8.9",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "express": "^4.17.1",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.3.5",
     "source-map-support": "^0.5.19"
   }
 }

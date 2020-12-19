@@ -32,12 +32,12 @@ const File = (sequelize:any, datatypes:any)=>{
                 onUpdate:'cascade'
             }
         },
-        contentsId:{
-            field:'contentsId',
+        conmmentsId:{
+            field:'commentsId',
             type:datatypes.BIGINT,
             references:{
-                model:'contentsId',
-                key:'contentsId',
+                model:'comments',
+                key:'commentsId',
                 onDeleted:'cascade',
                 onUpdate:'cascade',
             }
