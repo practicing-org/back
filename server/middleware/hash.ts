@@ -4,16 +4,14 @@ import secrete from './hashS.json';
 
 const hash = async (req:Request, res:Response, next:NextFunction) =>{
     try{
-        console.log(req.body);
         const password = req.body.password;
-        console.log(password);
         if(!password){
             console.log('password is null');
             res.status(400).json({
                 message:'password is null'
             })
         }
-        const Secrete:string  = secrete.secrete;
+        const Secrete:string  = secrete.secret;
         req.body.hashPassword = await crypto.createHash('sha256', password).update(Secrete).digest('hex');
         next();
     }catch(err){
