@@ -1,4 +1,5 @@
 import {Request, Response, NextFunction} from 'express';
+import path from 'path';
 import multer from 'multer';
 import db from '../../../model/dbcon';
 import user from '../../user/user';
@@ -7,7 +8,7 @@ import user from '../../user/user';
 export default async (req:Request, res:Response, next:NextFunction)=>{
     const {userId, title, date, contents, profile} = req.body;
     const filename = req.file.filename;
-    console.log(filename)
+    console.log(path.join(__dirname, '..','..','..','upload',filename))
     if(!userId || !title || !date || (!contents&&!filename)){
         console.log('client send null');
         res.status(400).json({
@@ -21,7 +22,7 @@ export default async (req:Request, res:Response, next:NextFunction)=>{
         )
         if(filename){
             const savefile = await db.image.create({
-                filename:filename,
+                filename:path.join(__dirname, '..','..','..','upload',filename),
                 userId:userId,
                 profile:profile,
                 boardId:makeNewBoard.dataValues.boardId,
