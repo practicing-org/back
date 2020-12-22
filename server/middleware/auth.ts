@@ -23,7 +23,7 @@ const checkToken = async (req:Request, res:Response, next:NextFunction)=>{
             req.body.userId = DecodedToken.sub;
             req.body.long = DecodedToken.long;
         })
-        //console.log(decodedToken);
+        console.log(req.body);
         next();
     } catch(err){
         console.log(err);

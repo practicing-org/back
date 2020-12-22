@@ -17,6 +17,11 @@ const Board = (sequelize:any, datatypes:any)=>{
                 onUpdate:'cascade',
             }
         },
+        title:{
+            field:'title',
+            type:datatypes.STRING(60),
+            allowNull:false,
+        },
         date:{
             field:'date',
             type:datatypes.DATE,
@@ -25,7 +30,7 @@ const Board = (sequelize:any, datatypes:any)=>{
         contents:{
             field:'contents',
             type:datatypes.STRING(250),
-            allowNull:false
+
         }
     },{
         tableName:'board',
