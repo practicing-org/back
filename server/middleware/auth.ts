@@ -11,7 +11,7 @@ const checkToken = async (req:Request, res:Response, next:NextFunction)=>{
         })
     }
     try{
-         const decodedToken:any = await jsonwebtoken.verify(JSON.parse(token), secret.secret, (err:any,DecodedToken:any)=>{
+        const decodedToken:any = await jsonwebtoken.verify(JSON.parse(token), secret.secret, (err:any,DecodedToken:any)=>{
             
             if(err){
                 console.log("err = \n", err);
