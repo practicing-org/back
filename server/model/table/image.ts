@@ -31,6 +31,16 @@ const File = (sequelize:any, datatypes:any)=>{
                 onDeleted:'cascade',
                 onUpdate:'cascade'
             }
+        },
+        conmmentsId:{
+            field:'commentsId',
+            type:datatypes.BIGINT,
+            references:{
+                model:'comments',
+                key:'commentsId',
+                onDeleted:'cascade',
+                onUpdate:'cascade',
+            }
         }
     },{
         tableName:'file',
