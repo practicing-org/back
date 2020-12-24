@@ -25,12 +25,13 @@ import Like from './table/like';
 import Image from './table/image';
 import Comments from './table/comments';
 import Board from './table/board';
+import Show from './table/show';
 
 db.user = User(db.sequelize,db.Sequelize);
 db.friend = Friend(db.sequelize, db.Sequelize);
 db.board = Board(db.sequelize, db.Sequelize);
 db.comments = Comments(db.sequelize, db.Sequelize);
-
+db.show = Show(db.sequelize, db.Sequelize);
 db.like = Like(db.sequelize, db.Sequelize);
 db.image = Image(db.sequelize, db.Sequelize);
 
@@ -45,6 +46,9 @@ db.user.hasMany(db.friend,{
 
 db.user.hasMany(db.board,{
     foreignKey:'userId'
+})
+db.show.hasMany(db.board,{
+    foreignKey:'show'
 })
 
 db.user.hasMany(db.image,{

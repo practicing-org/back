@@ -31,6 +31,17 @@ const Board = (sequelize:any, datatypes:any)=>{
             field:'contents',
             type:datatypes.STRING(250),
 
+        },
+        show:{
+            field:'show',
+            type:datatypes.STRING(30),
+            allowNull:false,
+            references:{
+                model:'show',
+                key:"show",
+                onDeleted:'cascade',
+                onUpdate:'cascade',
+            }
         }
     },{
         tableName:'board',
