@@ -8,13 +8,13 @@ import user from '../../user/user';
 export default async (req:Request, res:Response, next:NextFunction)=>{
     const {userId, title, date, contents, profile, show} = req.body;
     const files:any = req.files;
-    console.log(path.join(__dirname, '..','..','..','upload',files[0].filename))
-    if(!userId || !title || !date || (!contents&&!files[0].filename ||!show)){
+    if(!userId || !title || !date || (!contents&&!files) ||!show){
         console.log('client send null');
         res.status(400).json({
             message:"don't send null",
             result:0
         })
+        return;
     }
     try{
         const Show = await db.show.findOne({raw:true, where:{show:show}});
@@ -22,11 +22,12 @@ export default async (req:Request, res:Response, next:NextFunction)=>{
             res.status(401).json({
                 message:"server can't find showtype"
             })
+            return;
         }
         const makeNewBoard = await db.board.create(
             {userId:userId, title:title, date:date, contents:contents, show:show}
         )
-        if(files[0].filename){
+        if(files[0]){
             for(let i = 0; i < files.length; i++){
                 await db.image.create({
                     filename:path.join(__dirname, '..','..','..','upload',files[i].filename),
@@ -40,8 +41,6 @@ export default async (req:Request, res:Response, next:NextFunction)=>{
         res.json({
             result:1
         })
-        console.log(makeNewBoard.dataValues.boardId);
-        
     }catch(err){
         console.log(err);
         res.status(500).json({

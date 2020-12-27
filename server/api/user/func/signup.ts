@@ -10,6 +10,7 @@ export default async (req:Request, res:Response, next:NextFunction)=>{
             message:'you send null',
             result:0
         })
+        return;
     }
     try {
         const finduser = await db.user.findOne({raw:true, where:{userId:userId}});
@@ -19,12 +20,13 @@ export default async (req:Request, res:Response, next:NextFunction)=>{
                 message:'user is already exist',
                 result:0
             })
+            return;
         }
-        const createuser = await db.user.create(
-            {userId:userId, password:hashPassword, name:name, birthday:birthday})
-            res.json({
-                result:1
-            })
+        await db.user.create({userId:userId, password:hashPassword, name:name, birthday:birthday})
+        res.json({
+            result:1
+        })
+        
     } catch (err){
         console.log(err);
         res.status(500).json({

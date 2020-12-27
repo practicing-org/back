@@ -9,6 +9,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
             message:"you send null",
             result:"0"
         })
+        return;
     }
     try{
         const finduser = await db.user.findOne({raw:true,where:{userId:userId}});
@@ -18,13 +19,15 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
                 message:"server can`t find your id",
                 result:"0"
             })
+            return;
         }
         if(finduser.password != hashPassword){
             console.log("password is wrong")
-        res.status(401).json({
-            message:"password is wrong",
-            result:0
-        })
+            res.status(401).json({
+                message:"password is wrong",
+                result:0
+            })
+            return;
         }
         console.log("signin success");
         next();

@@ -3,15 +3,17 @@ import jsonwebtoken from 'jsonwebtoken';
 import secret from './hashS.json';
 
 const checkToken = async (req:Request, res:Response, next:NextFunction)=>{
-    const token = req.headers['authorization'].replace(/^jsonwebtoken\s/, '');
-
+    console.log(req.headers['authorization']);
+    const token = req.headers['authorization']
+    console.log(token);
+    console.log(req.body);
     if(!token){
         return res.status(403).json({
             err:"notoken"
         })
     }
     try{
-        const decodedToken:any = await jsonwebtoken.verify(JSON.parse(token), secret.secret, (err:any,DecodedToken:any)=>{
+        await jsonwebtoken.verify(JSON.parse(token), secret.secret, (err:any,DecodedToken:any)=>{
             
             if(err){
                 console.log("err = \n", err);
@@ -36,6 +38,7 @@ const checkToken = async (req:Request, res:Response, next:NextFunction)=>{
 
 const makeToken = async (req:Request, res:Response, next:NextFunction)=>{
     const {userId,long} = req.body;
+    console.log(req.body)
     let day:number = 1;
     if(long == 1){
         day = 30;
