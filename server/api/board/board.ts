@@ -5,6 +5,6 @@ import upload from '../../middleware/multer';
 import showBoard from './func/show board';
 const board = Router();
 
-board.post('/board', authmiddleware.checkToken, upload.array('files'), makeboard)
-board.get('/board', authmiddleware.checkToken, showBoard);
+board.post('/board', authmiddleware.checkTokenForSignin, upload.array('files'), makeboard)
+board.get('/board', authmiddleware.checkTokenForSignin, showBoard);
 export default board;
