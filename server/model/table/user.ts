@@ -1,9 +1,15 @@
 const User = (sequelize:any, DataTypes:any)=>{
     const user = sequelize.define('user',{
+        user_Id:{
+            field:"user_Id",
+            type:DataTypes.BIGINT,
+            primaryKey:true,
+            autoIncrement:true
+        },
         userId:{
             field:"userId",
             type:DataTypes.STRING(30),
-            primaryKey:true
+            allowNull:false
         },
         password:{
             field:'password',

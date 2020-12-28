@@ -38,21 +38,21 @@ db.image = Image(db.sequelize, db.Sequelize);
 
 //relationship
 db.user.hasMany(db.friend,{
-    foreignKey:'userId'
+    foreignKey:'user_Id'
 });
 db.user.hasMany(db.friend,{
     foreignKey:'friend'
 });
 
 db.user.hasMany(db.board,{
-    foreignKey:'userId'
+    foreignKey:'user_Id'
 })
 db.show.hasMany(db.board,{
     foreignKey:'show'
 })
 
 db.user.hasMany(db.image,{
-    foreignKey:'userId'
+    foreignKey:'user_Id'
 })
 db.board.hasMany(db.image,{
     foreignKey:'boardId'
@@ -62,14 +62,14 @@ db.board.hasMany(db.comments,{
     foreignKey:'boardId'
 })
 db.user.hasMany(db.comments,{
-    foreignKey:'userId'
+    foreignKey:'user_Id'
 })
 db.comments.hasMany(db.comments,{
     foreignKey:'FcommentsId'
 })
 
 db.user.hasMany(db.like,{
-    foreignKey:'userId'
+    foreignKey:'user_Id'
 })
 db.board.hasMany(db.like,{
     foreignKey:'boardId'

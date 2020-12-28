@@ -3,8 +3,9 @@ import jsonwebtoken from 'jsonwebtoken';
 import secret from './hashS.json';
 
 const checkTokenForSignin = async (req:Request, res:Response, next:NextFunction)=>{
+    console.log(req.body);
     const token = req.headers['authorization']
-
+    
     if(!token){
         return res.status(403).json({
             err:"notoken"

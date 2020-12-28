@@ -11,24 +11,24 @@ const Friend = (sequelize:any, datatypes:any)=>{
             type:datatypes.DATE,
             allowNull: false
         },
-        userId:{
-            field:"userId",
-            type:datatypes.STRING(30),
+        user_Id:{
+            field:"user_Id",
+            type:datatypes.BIGINT,
             allowNull:false,
             references:{
                 model:'user',
-                key:'userId',
+                key:'user_Id',
                 onDeleted:'cascade',
                 onUpdate:"cascade",
             }
         },
         friend:{
             field:"friend",
-            type:datatypes.STRING(30),
+            type:datatypes.BIGINT,
             allowNull:false,
             references:{
                 model:'user',
-                key:'userId',
+                key:'user_Id',
                 onDeleted:'cascade',
                 onUpdate:"cascade",
             }

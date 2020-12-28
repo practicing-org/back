@@ -6,13 +6,13 @@ const Board = (sequelize:any, datatypes:any)=>{
             autoIncrement: true,
             primaryKey: true
         },
-        userId:{
-            field:'userId',
-            type:datatypes.STRING(30),
+        user_Id:{
+            field:"user_Id",
+            type:datatypes.BIGINT,
             allowNull:false,
             references:{
                 model:'user',
-                key:"userId",
+                key:"user_Id",
                 onDeleted:'cascade',
                 onUpdate:'cascade',
             }

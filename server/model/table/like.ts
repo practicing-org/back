@@ -16,13 +16,13 @@ const Like = (sequelize:any, datatypes:any)=>{
                 onUpdate:'cascade'
             }
         },
-        userId:{
-            field:'userId',
-            type:datatypes.STRING(30),
+        user_Id:{
+            field:"user_Id",
+            type:datatypes.BIGINT,
             allowNull:false,
             references:{
                 model:'user',
-                key:'userId',
+                key:'user_Id',
                 onDeleted:'cascade',
                 onUpdate:'cascade'
             }
