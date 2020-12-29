@@ -6,17 +6,6 @@ const Board = (sequelize:any, datatypes:any)=>{
             autoIncrement: true,
             primaryKey: true
         },
-        user_Id:{
-            field:"user_Id",
-            type:datatypes.BIGINT,
-            allowNull:false,
-            references:{
-                model:'user',
-                key:"user_Id",
-                onDeleted:'cascade',
-                onUpdate:'cascade',
-            }
-        },
         title:{
             field:'title',
             type:datatypes.STRING(60),
@@ -30,19 +19,8 @@ const Board = (sequelize:any, datatypes:any)=>{
         contents:{
             field:'contents',
             type:datatypes.STRING(250),
-
         },
-        show:{
-            field:'show',
-            type:datatypes.STRING(30),
-            allowNull:false,
-            references:{
-                model:'show',
-                key:"show",
-                onDeleted:'cascade',
-                onUpdate:'cascade',
-            }
-        }
+
     },{
         tableName:'board',
         timestamps:false,

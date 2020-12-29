@@ -5,7 +5,7 @@ import {Op, QueryTypes} from 'sequelize';
 
 export default async (req:Request,res:Response, next:NextFunction)=>{//관계정의가 안됨 야발
     const {userId} = req.body;
-    const query = "select * from board where `show` = 'all' or (`show` = 'me' and user_Id = :user_Id) or (`show` = 'friend' and (user_Id = ANY(select user_Id from friend where friend =:user_Id and user_Id = ANY(select friend from friend where user_Id =:user_Id)) or user_Id = :user_Id))"
+    const query = "select * from board where `showId` = 'all' or (`showId` = 'me' and user_Id = :user_Id) or (`showId` = 'friend' and (user_Id = ANY(select user_Id from friend where friend =:user_Id and user_Id = ANY(select friend from friend where user_Id =:user_Id)) or user_Id = :user_Id))"
     try{
         let findboard:any;
         const user = await db.user.findOne({raw:true, where:{userId:userId}})

@@ -28,7 +28,7 @@ export default async (req:Request, res:Response, next:NextFunction)=>{
             return;
         }
         const makeNewBoard = await db.board.create(
-            {user_Id:user.user_Id, title:title, date:date, contents:contents, show:show}
+            {user_Id:user.user_Id, title:title, date:date, contents:contents, showId:show}
         )
         
         if(files[0]){

@@ -48,7 +48,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
             return;
         }
 
-        const query = "select * from board where `show` = 'all' or (`show` = 'friend' and (user_Id = (select user_Id from friend where friend =:user_Id and user_Id = (select friend from friend where user_Id =:user_Id and friend =:selectuser_id))))"
+        const query = "select * from board where `showId` = 'all' or (`showId` = 'friend' and (user_Id = (select user_Id from friend where friend =:user_Id and user_Id = (select friend from friend where user_Id =:user_Id and friend =:selectuser_id))))"
 
         let findboard:any;
         await db.sequelize.query(query, {replacements: {user_Id:user.user_Id,selectuser_id:selectuser}}, { type: QueryTypes.SELECT }).then(

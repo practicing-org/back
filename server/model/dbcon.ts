@@ -37,47 +37,83 @@ db.image = Image(db.sequelize, db.Sequelize);
 
 
 //relationship
+db.user.hasMany(db.friend);
+db.friend.belongsTo(db.user,{
+    foreignKey:'user_Id',
+    onDeleted:'cascade',
+    onUpdate:'cascade',
+})
 db.user.hasMany(db.friend,{
-    foreignKey:'user_Id'
+    foreignKey:'friend',
+    onDeleted:'cascade',
+    onUpdate:'cascade',
 });
-db.user.hasMany(db.friend,{
+db.friend.belongsTo(db.user,{
     foreignKey:'friend'
-});
-
-db.user.hasMany(db.board,{
-    foreignKey:'user_Id'
-})
-db.show.hasMany(db.board,{
-    foreignKey:'show'
 })
 
-db.user.hasMany(db.image,{
-    foreignKey:'user_Id'
+db.user.hasMany(db.board)
+db.board.belongsTo(db.user,{
+    foreignKey:'user_Id',
+    onDeleted:'cascade',
+    onUpdate:'cascade',
 })
-db.board.hasMany(db.image,{
-    foreignKey:'boardId'
+db.show.hasMany(db.board)
+db.board.belongsTo(db.show,{
+    foreignKey:'showId',
+    onDeleted:'cascade',
+    onUpdate:'cascade',
 })
 
-db.board.hasMany(db.comments,{
-    foreignKey:'boardId'
+db.user.hasMany(db.image)
+db.image.belongsTo(db.user,{
+    foreignKey:'user_Id',
+    onDeleted:'cascade',
+    onUpdate:'cascade',
 })
-db.user.hasMany(db.comments,{
-    foreignKey:'user_Id'
+db.board.hasMany(db.image)
+db.image.belongsTo(db.board,{
+    foreignKey:'boardId',
+    onDeleted:'cascade',
+    onUpdate:'cascade',
+})
+
+db.user.hasMany(db.comments)
+db.comments.belongsTo(db.user,{
+    foreignKey:'user_Id',
+    onDeleted:'cascade',
+    onUpdate:'cascade',
+})
+db.board.hasMany(db.comments)
+db.comments.belongsTo(db.board,{
+    foreignKey:'boardId',
+    onDeleted:'cascade',
+    onUpdate:'cascade',
 })
 db.comments.hasMany(db.comments,{
-    foreignKey:'FcommentsId'
+    foreignKey:'FcommentsId',
+    onDeleted:'cascade',
+    onUpdate:'cascade',
 })
 
-db.user.hasMany(db.like,{
-    foreignKey:'user_Id'
+db.user.hasMany(db.like)
+db.like.belongsTo(db.user,{
+    foreignKey:'user_Id',
+    onDeleted:'cascade',
+    onUpdate:'cascade',
 })
-db.board.hasMany(db.like,{
-    foreignKey:'boardId'
+db.board.hasMany(db.like)
+db.like.belongsTo(db.board,{
+    foreignKey:'boardId',
+    onDeleted:'cascade',
+    onUpdate:'cascade',
 })
-db.comments.hasMany(db.like,{
-    foreignKey:'commentsId'
+db.comments.hasMany(db.like)
+db.like.belongsTo(db.comments,{
+    foreignKey:'commentsId',
+    onDeleted:'cascade',
+    onUpdate:'cascade',
 })
-
 //
 
 export default db;
