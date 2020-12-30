@@ -53,15 +53,17 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
         let findboard:any;
         await db.sequelize.query(query, {replacements: {user_Id:user.user_Id,selectuser_id:selectuser}}, { type: QueryTypes.SELECT }).then(
             function (result:any){
+                console.log(result)
                 result = result[0]
-                for(let i = 0; i < result[0].length; i++){
+                // for(let i = 0; i < result.length; i++){
                     
-                    result[i] = result[i][0];
-                    console.log(i);
-                }
+                //     result[i] = result[i][0];
+                //     console.log(i);
+                // }
                 findboard = result;
             }
         )
+        console.log(findboard)
         for(let i = 0; i < findboard.length; i++){
             const user = await db.user.findOne({raw:true, attributes:["user_Id","name"], where:{user_Id:findboard[i].user_Id}})
             let profile = await db.image.findOne({raw:true, attributes:["filename"], where:{user_Id:findboard[i].user_Id, profile:1}})
