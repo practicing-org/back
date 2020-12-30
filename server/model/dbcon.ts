@@ -37,7 +37,8 @@ db.image = Image(db.sequelize, db.Sequelize);
 
 
 //relationship
-db.user.hasMany(db.friend);
+db.user.hasMany(db.friend,{
+    foreignKey:'user_Id'});
 db.friend.belongsTo(db.user,{
     foreignKey:'user_Id',
     onDeleted:'cascade',
@@ -52,39 +53,45 @@ db.friend.belongsTo(db.user,{
     foreignKey:'friend'
 })
 
-db.user.hasMany(db.board)
+db.user.hasMany(db.board,{
+    foreignKey:'user_Id'})
 db.board.belongsTo(db.user,{
     foreignKey:'user_Id',
     onDeleted:'cascade',
     onUpdate:'cascade',
 })
-db.show.hasMany(db.board)
+db.show.hasMany(db.board,{
+    foreignKey:'showId'})
 db.board.belongsTo(db.show,{
     foreignKey:'showId',
     onDeleted:'cascade',
     onUpdate:'cascade',
 })
 
-db.user.hasMany(db.image)
+db.user.hasMany(db.image,{
+    foreignKey:'user_Id'})
 db.image.belongsTo(db.user,{
     foreignKey:'user_Id',
     onDeleted:'cascade',
     onUpdate:'cascade',
 })
-db.board.hasMany(db.image)
+db.board.hasMany(db.image,{
+    foreignKey:'boardId'})
 db.image.belongsTo(db.board,{
     foreignKey:'boardId',
     onDeleted:'cascade',
     onUpdate:'cascade',
 })
 
-db.user.hasMany(db.comments)
+db.user.hasMany(db.comments,{
+    foreignKey:'user_Id'})
 db.comments.belongsTo(db.user,{
     foreignKey:'user_Id',
     onDeleted:'cascade',
     onUpdate:'cascade',
 })
-db.board.hasMany(db.comments)
+db.board.hasMany(db.comments,{
+    foreignKey:'boardId'})
 db.comments.belongsTo(db.board,{
     foreignKey:'boardId',
     onDeleted:'cascade',
@@ -96,19 +103,22 @@ db.comments.hasMany(db.comments,{
     onUpdate:'cascade',
 })
 
-db.user.hasMany(db.like)
+db.user.hasMany(db.like,{
+    foreignKey:'user_Id'})
 db.like.belongsTo(db.user,{
     foreignKey:'user_Id',
     onDeleted:'cascade',
     onUpdate:'cascade',
 })
-db.board.hasMany(db.like)
+db.board.hasMany(db.like,{
+    foreignKey:'boardId'})
 db.like.belongsTo(db.board,{
     foreignKey:'boardId',
     onDeleted:'cascade',
     onUpdate:'cascade',
 })
-db.comments.hasMany(db.like)
+db.comments.hasMany(db.like,{
+    foreignKey:'commentsId'})
 db.like.belongsTo(db.comments,{
     foreignKey:'commentsId',
     onDeleted:'cascade',

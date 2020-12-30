@@ -18,3 +18,4 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
             message:'server has error now'
         })
     }
+}
