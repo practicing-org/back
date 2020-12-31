@@ -82,6 +82,14 @@ db.image.belongsTo(db.board,{
     onDeleted:'cascade',
     onUpdate:'cascade',
 })
+db.comments.hasOne(db.image,{
+    foreignKey:'commentsId'
+})
+db.image.belongsTo(db.comments,{
+    foreignKey:'commentsId',
+    onDeleted:'cascade',
+    onUpdate:'cascade',
+})
 
 db.user.hasMany(db.comments,{
     foreignKey:'user_Id'})
