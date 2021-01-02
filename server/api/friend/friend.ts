@@ -7,5 +7,5 @@ const friend = Router();
 
 friend.get('/friend/:friend', reqFriend);
 friend.get('/showfriend/:user_Id', auth.checkTokenForSignin, showFriend);
-friend.get('showfriendrequset', auth.checkTokenForSignin, showFriendRequest);
+friend.get('/showfriend/requset', auth.checkTokenForSignin, showFriendRequest);
 export default friend;

@@ -11,6 +11,6 @@ user.post('/signin', hashmiddleware.hash, signin, auth.makeTokenForSignin);
 user.post('/signup',hashmiddleware.hash, signup);
 user.post('/autosignin',auth.checkTokenForSignin, auth.makeTokenForSignin);
 user.get('/createTokenForUpdate', hashmiddleware.hash, signin, auth.makeTokenForDataUpdate);
-user.put('/userDataUpdate', hashmiddleware.hash, auth.checkTokenForDataUpdate, dataupdate);
+user.put('/user', hashmiddleware.hash, auth.checkTokenForDataUpdate, dataupdate);
 user.get('/user/:user_Id',auth.checkTokenForSignin, showuser);
 export default user;

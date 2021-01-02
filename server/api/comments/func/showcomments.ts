@@ -17,8 +17,19 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
     }
     
     try{
-        const comments = await db.comments.findAll({raw:true, include:[{model:db.image, required: false, attributes:["filename"]}], where:{boardId:boardId, FcommentsId:commentsId}});
+        let comments = await db.comments.findAll({raw:true, include:[{model:db.image, required: false, attributes:["filename"]},
+        ], where:{boardId:boardId, FcommentsId:commentsId}});
         
+        for(let i = 0; i < comments.length; i++){
+            const user = await db.user.findOne({raw:true, attributes:["user_Id","name"], where:{user_Id:comments[i].user_Id}})
+            let profile = await db.image.findOne({raw:true, attributes:["filename"], where:{user_Id:comments[i].user_Id, profile:1}})
+
+            if(profile === null){
+                profile = {};
+                profile.filename = 0;
+            }
+            comments[i].user = {name:user.name, profile:profile.filename}
+        }
         res.json({
             comments
         })
