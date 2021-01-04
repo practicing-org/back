@@ -5,7 +5,7 @@ import showFriendRequest from './func/showfriendrequest';
 import auth from '../../middleware/auth';
 const friend = Router();
 
-friend.get('/friend/:friend', reqFriend);
-friend.get('/showfriend/:user_Id', auth.checkTokenForSignin, showFriend);
-friend.get('/showfriend/requset', auth.checkTokenForSignin, showFriendRequest);
+friend.post('/friend/:friend', reqFriend);
+friend.get('/friend/show/:user_Id', auth.checkTokenForSignin, showFriend);
+friend.get('/friend/show/requset', auth.checkTokenForSignin, showFriendRequest);
 export default friend;

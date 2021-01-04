@@ -7,7 +7,6 @@ import user from '../../user/user';
 
 export default async (req:Request, res:Response, next:NextFunction)=>{
     const {userId, title, date, contents, profile, show} = req.body;
-    console.log(req.body)
     const files:any = req.files;
     if(!userId || !title || !date || (!contents&&!files) ||!show){
         console.log('client send null');
