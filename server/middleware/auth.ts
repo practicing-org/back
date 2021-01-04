@@ -58,7 +58,7 @@ const makeTokenForSignin = async (req:Request, res:Response, next:NextFunction)=
             console.log('server make token');
             res.json({
                 token,
-                message:"login success"
+                result:1
             })
         })
     } catch(err){
@@ -88,7 +88,7 @@ const makeTokenForDataUpdate = async (req:Request, res:Response, next:NextFuncti
             console.log('server make token');
             res.json({
                 tokenForUpdate:token,
-                message:"login success"
+                result:1
             })
         })
     } catch(err){
