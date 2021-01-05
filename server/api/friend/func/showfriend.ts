@@ -7,14 +7,22 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
     const {user_Id} = req.params;
 
     try{
-        const query = 'select user_Id, name, ifnull(0,filename)as profile from friend inner join user using(user_Id) left outer join file using(user_Id) where friend =:user_Id and user_Id = ANY(select friend from friend where user_Id =:user_Id)'
+        const query = 'select user_Id, name from friend inner join user using(user_Id) where friend =:user_Id and user_Id = ANY(select friend from friend where user_Id =:user_Id)'
         let findfriend = await db.sequelize.query(query, {replacements:{user_Id:user_Id},type:QueryTypes.SELECT, raw:true});
+
+        for(let i = 0; i < findfriend.length; i++){
+            const query = 'select ifnull(0,filename) as profile from file where profile = 1 and user_Id = :user_Id';
+            const profile = await db.sequelize.query(query, {replacements:{user_Id:findfriend[i].user_Id}, type:QueryTypes.SELECT, raw:true});
+            findfriend[i].profile = profile.profile;
+        }
         res.json({
+            result:1,
             findfriend
         })
     }catch(err){
         console.log(err);
         res.status(500).json({
+            result:0,
             message:'server has error now'
         })
     }

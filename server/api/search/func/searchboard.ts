@@ -9,6 +9,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
   if(!board||!userId){
     console.log('you send null');
     res.status(401).json({
+      result:0,
       message:'you send null'
     })
   }
@@ -30,7 +31,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
     }, replacements:{user_Id:user.user_Id}})
 
     for(let i = 0; i < findBoard.length; i++){
-      const user = await db.user.findOne({raw:true, attributes:["user_Id","name"], where:{user_Id:findBoard[i].user_Id}})
+      const user = await db.user.findOne({raw:true, attributes:["name"], where:{user_Id:findBoard[i].user_Id}})
       let profile = await db.image.findOne({raw:true, attributes:["filename"], where:{user_Id:findBoard[i].user_Id, profile:1}})
 
       if(profile === null){
@@ -38,7 +39,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
           profile.filename = 0;
       }
 
-      findBoard[i].user = {user_Id:user.user_Id, userName: user.name, profile:profile.filename};
+      findBoard[i].user = {userName: user.name, profile:profile.filename};
 
       const boardImage = await db.image.findAll({raw:true, attributes:['filename'], where:{boardId:findBoard[i].boardId}})
       findBoard[i].images = boardImage;

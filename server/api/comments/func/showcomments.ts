@@ -5,6 +5,7 @@ import comments from '../comments';
 
 export default async(req:Request, res:Response, next:NextFunction)=>{
     let {boardId, commentsId} = req.body;
+    console.log(req.body);
     if(!boardId){
         console.log('you send null');
         res.status(401).json({
