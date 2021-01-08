@@ -1,4 +1,5 @@
 import {Request, Response, NextFunction} from 'express';
+import { Sequelize } from 'sequelize';
 import db from '../../../model/dbcon';
 import comments from '../comments';
 
@@ -30,6 +31,9 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
                 profile.filename = 0;
             }
             comments[i].user = {name:user.name, profile:profile.filename}
+
+            let childComments = await db.comments.findOne({raw:true, attributes:[[Sequelize.fn('COUNT', Sequelize.col('*')), 'child']], where:{FcommentsId: comments[i].commentsId}})
+            comments[i].child = childComments.child
         }
         res.json({
             comments
