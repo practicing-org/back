@@ -34,6 +34,12 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
 
             let childComments = await db.comments.findOne({raw:true, attributes:[[Sequelize.fn('COUNT', Sequelize.col('*')), 'child']], where:{FcommentsId: comments[i].commentsId}})
             comments[i].child = childComments.child
+
+            let likeNum = await db.like.findOne({raw:true, attributes:[[Sequelize.fn('COUNT', Sequelize.col('*')), 'number']], where:{commentsId: comments[i].commentsId}})
+            comments[i].likeNum = likeNum.number;
+
+            const like = await db.like.findOne({raw:true, where:{user_Id:user.user_Id, commentsId:comments[i].commentsId}})
+            comments[i].like = !!like;
         }
         res.json({
             comments

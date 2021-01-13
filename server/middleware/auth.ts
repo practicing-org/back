@@ -16,7 +16,7 @@ const checkTokenForSignin = async (req:Request, res:Response, next:NextFunction)
             
             if(err){
                 console.log("err = \n", err);
-                res.status(401).json({
+                res.status(400).json({
                     message:"your token is wrong"
                 })
                 return;
@@ -111,7 +111,7 @@ const checkTokenForDataUpdate = async (req:Request, res:Response, next:NextFunct
             
             if(err){
                 console.log("err = \n", err);
-                res.status(401).json({
+                res.status(400).json({
                     message:"your token is wrong"
                 })
                 return

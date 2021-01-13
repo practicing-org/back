@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "exports": {
+    "./": "./sserver/src"
+  },
   "scripts": {
     "start": "nodemon server/src/www.ts",
     "build": "webpack --config webpack.config.js"

@@ -1,7 +1,6 @@
-import 'source-map-support/register';
-import {createServer} from 'http';
+
 import app from '../App';
-import * as express from "express";
+import {createServer} from 'http';
 
 const port: number = Number(process.env.PORT) || 3030;
 
