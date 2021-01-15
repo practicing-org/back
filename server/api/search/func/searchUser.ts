@@ -4,7 +4,7 @@ import {Op, Sequelize} from 'sequelize';
 
 export default async(req:Request, res:Response, next:NextFunction)=>{
   const {user} = req.params;
-  const {userId} = req.body;
+  const {userId, user_Ids} = req.body;
   if(!user||!userId){
     console.log('you send null');
     res.status(401).json({
@@ -23,7 +23,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
     const User = await db.user.findOne({raw:true, attributes:['user_Id'], where:{userId:userId}})
 
     
-    let findUser = await db.user.findAll({raw:true, attributes:['user_Id','name'], where:{name:{[Op.regexp]:value}}});
+    let findUser = await db.user.findAll({raw:true, attributes:['user_Id','name'], where:{name:{[Op.regexp]:value}, user_Id:{[Op.notIn]:user_Ids}}, limit:20, order:[["user_Id","desc"]]});
     console.log(findUser);
     for(let i = 0;i < findUser.length; i++){
       let profile = await db.image.findOne({raw:true,
@@ -41,13 +41,13 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
       const findFriendUserId = await db.friend.findOne({raw:true, where:{user_Id:User.user_Id, friend:findUser[i].user_Id}})
       const findFriendFriend = await db.friend.findOne({raw:true, where:{user_Id:findUser[i].user_Id, friend:User.user_Id}})
       if(!findFriendUserId&&!findFriendFriend){//둘다 친추를 안 보냈을 때
-        findUser[i].relation = "nobody";
+        findUser[i].relation = "no";
       }
       else if(findFriendUserId&&!findFriendFriend){//내가 친추 보냈을 때
-          findUser[i].relation = "me send";
+          findUser[i].relation = "me";
       }
       else if(!findFriendUserId&&findFriendFriend){//다른 사람이 친추를 보냈을 때
-          findUser[i].relation = "other send"
+          findUser[i].relation = "you"
       }
       else{
           findUser[i].relation = "both"//둘다 친추 보냈을 때

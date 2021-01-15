@@ -22,13 +22,13 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
   console.log(valueArray);
   
   try{
-    const user = await db.user.findOne({raw:true, attributes:['user_Id'], where:{userId:userId}})
+    const User = await db.user.findOne({raw:true, attributes:['user_Id'], where:{userId:userId}})
 
-    let findBoard = await db.board.findAll({raw:true, where:{[Op.notIn]:boardIds,
-      [Op.or]:[{showId:'all'}, {showId:'me', user_id:user.user_Id}, {showId:'friend', user_Id:{[Op.in]:[
+    let findBoard = await db.board.findAll({raw:true, where:{boardId:{[Op.notIn]:boardIds},
+      [Op.or]:[{showId:'all'}, {showId:'me', user_id:User.user_Id}, {showId:'friend', user_Id:{[Op.in]:[
         Sequelize.literal('select user_Id from friend where friend =:user_Id and user_Id = ANY(select friend from friend where user_Id =:user_Id)')]
       }}],[Op.or]:[{contents:{[Op.regexp]:value}}, {title:{[Op.regexp]:value}}]
-    }, replacements:{user_Id:user.user_Id}, limit:20, order:["boardId","desc"]})
+    }, replacements:{user_Id:User.user_Id},order:[["boardId","desc"]], limit:20})
 
     for(let i = 0; i < findBoard.length; i++){
       const user = await db.user.findOne({raw:true, attributes:["name"], where:{user_Id:findBoard[i].user_Id}})
@@ -48,7 +48,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
 			findBoard[i].likeNum = likeNum.number;
 
 
-			const like = await db.like.findOne({raw:true, where:{user_Id:user.user_Id, boardId:findBoard[i].boardId}})
+			const like = await db.like.findOne({raw:true, where:{user_Id:User.user_Id, boardId:findBoard[i].boardId}})
 			findBoard[i].like = !!like;
     }
 

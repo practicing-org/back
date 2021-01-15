@@ -28,7 +28,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
         selectUser.profile = profile.filename;
 
         if(user.user_Id == selectuser){
-            let findboard = await db.board.findAll({raw:true, where:{user_Id:selectUser.user_Id, [Op.notIn]:boardIds}, limit:20, order:["boardId","desc"]});
+            let findboard = await db.board.findAll({raw:true, where:{user_Id:selectUser.user_Id, boarId:{[Op.notIn]:boardIds}},order:[["boardId","desc"]], limit:20});
             for(let i = 0; i < findboard.length; i++){
                 const user = await db.user.findOne({raw:true, attributes:["user_Id","name"], where:{user_Id:findboard[i].user_Id}})
                 let profile = await db.image.findOne({raw:true, attributes:["filename"], where:{user_Id:findboard[i].user_Id, profile:1}})
