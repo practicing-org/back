@@ -9,9 +9,5 @@
         "esModuleInterop": true
     },
     "files": [
-        "server/App.ts",
-        "server/src/www.ts",
-        "server/model/dbcon.ts",
-
     ]
 }

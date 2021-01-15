@@ -1,5 +1,5 @@
 
-import app from '../App';
+import app from './App';
 import {createServer} from 'http';
 
 const port: number = Number(process.env.PORT) || 3030;

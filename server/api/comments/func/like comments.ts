@@ -2,8 +2,8 @@ import {Request,Response,NextFunction} from 'express';
 import db from '../../../model/dbcon'
 
 export default async(req:Request, res:Response,next:NextFunction)=>{
-  const userId = req.body.userId;
-  const commentsId = req.params.commentsId;
+  const userId:string = req.body.userId;
+  const commentsId:string = req.params.commentsId;
 
   if(!commentsId||!userId){
     console.log("client send null");
