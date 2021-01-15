@@ -1,9 +1,10 @@
 import {Request, Response, NextFunction, } from 'express';
 import db from '../../../model/dbcon';
-import {QueryTypes, Sequelize} from 'sequelize';
+import {QueryTypes, Sequelize, Op} from 'sequelize';
 
 export default async(req:Request, res:Response, next:NextFunction)=>{
-    const {userId} = req.body;
+    const {userId, boardIds} = req.body;
+    const board_Ids = "("+boardIds.join()+")";
     const selectuser:any = +req.params.user_Id;
     console.log(userId, selectuser)
     if(!userId||!selectuser){
@@ -27,7 +28,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
         selectUser.profile = profile.filename;
 
         if(user.user_Id == selectuser){
-            let findboard = await db.board.findAll({raw:true, where:{user_Id:selectUser.user_Id}});
+            let findboard = await db.board.findAll({raw:true, where:{user_Id:selectUser.user_Id, [Op.notIn]:boardIds}, limit:20, order:["boardId","desc"]});
             for(let i = 0; i < findboard.length; i++){
                 const user = await db.user.findOne({raw:true, attributes:["user_Id","name"], where:{user_Id:findboard[i].user_Id}})
                 let profile = await db.image.findOne({raw:true, attributes:["filename"], where:{user_Id:findboard[i].user_Id, profile:1}})
@@ -54,9 +55,10 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
             })
             return;
         }
-
-        const query = "select * from board where `showId` = 'all' or (`showId` = 'friend' and (user_Id = (select user_Id from friend where friend =:user_Id and user_Id = (select friend from friend where user_Id =:user_Id and friend =:selectuser_id))))"
-
+        
+        
+        //공계범위가 전체인 글과 친구의 글 내가쓴 글에서 이미 로드된 글을 제외한 20글들  
+        const query = "select * from board where boardId not in"+board_Ids+"and (`showId` = 'all' or (`showId` = 'me' and user_Id = :user_Id) or (`showId` = 'friend' and (user_Id = ANY(select user_Id from friend where friend =:user_Id and user_Id = ANY(select friend from friend where user_Id =:user_Id)) or user_Id = :user_Id)))desc limit 20"
         let findboard:any;
         await db.sequelize.query(query, {replacements: {user_Id:user.user_Id,selectuser_id:selectuser}}, { type: QueryTypes.SELECT }).then(
             function (result:any){
