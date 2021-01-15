@@ -33,7 +33,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
             comments[i].user = {name:user.name, profile:profile.filename}
 
             let childComments = await db.comments.findOne({raw:true, attributes:[[Sequelize.fn('COUNT', Sequelize.col('*')), 'child']], where:{FcommentsId: comments[i].commentsId}})
-            comments[i].child = childComments.child
+            comments[i].childComments = childComments.child
 
             let likeNum = await db.like.findOne({raw:true, attributes:[[Sequelize.fn('COUNT', Sequelize.col('*')), 'number']], where:{commentsId: comments[i].commentsId}})
             comments[i].likeNum = likeNum.number;
