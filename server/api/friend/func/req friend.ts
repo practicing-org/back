@@ -1,7 +1,6 @@
 import {Request, Response, NextFunction} from 'express';
 import db from '../../../model/dbcon';
 import {Op} from 'sequelize';
-import user from '../../user/user';
 
 export default async(req:Request, res:Response, next:NextFunction)=>{
     const userId = req.body.userId;

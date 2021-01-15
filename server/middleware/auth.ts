@@ -16,7 +16,7 @@ const checkTokenForSignin = async (req:Request, res:Response, next:NextFunction)
             
             if(err){
                 console.log("err = \n", err);
-                res.status(401).json({
+                res.status(400).json({
                     message:"your token is wrong"
                 })
                 return;
@@ -58,7 +58,7 @@ const makeTokenForSignin = async (req:Request, res:Response, next:NextFunction)=
             console.log('server make token');
             res.json({
                 token,
-                message:"login success"
+                result:1
             })
         })
     } catch(err){
@@ -88,7 +88,7 @@ const makeTokenForDataUpdate = async (req:Request, res:Response, next:NextFuncti
             console.log('server make token');
             res.json({
                 tokenForUpdate:token,
-                message:"login success"
+                result:1
             })
         })
     } catch(err){
@@ -111,7 +111,7 @@ const checkTokenForDataUpdate = async (req:Request, res:Response, next:NextFunct
             
             if(err){
                 console.log("err = \n", err);
-                res.status(401).json({
+                res.status(400).json({
                     message:"your token is wrong"
                 })
                 return
