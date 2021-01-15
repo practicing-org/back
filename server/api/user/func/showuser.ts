@@ -1,6 +1,6 @@
 import {Request, Response, NextFunction, } from 'express';
 import db from '../../../model/dbcon';
-import {QueryTypes} from 'sequelize';
+import {QueryTypes, Sequelize} from 'sequelize';
 
 export default async(req:Request, res:Response, next:NextFunction)=>{
     const {userId} = req.body;
@@ -38,6 +38,13 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
                 findboard[i].user = {user_id:user.user_Id,userName: user.name, profile:profile.filename};
                 const boardImage = await db.image.findAll({raw:true, attributes:['filename'], where:{boardId:findboard[i].boardId}})
                 findboard[i].images = boardImage;
+
+                let likeNum = await db.like.findOne({raw:true, attributes:[[Sequelize.fn('COUNT', Sequelize.col('*')), 'number']], where:{boardId: findboard[i].boardId}})
+                findboard[i].likeNum = likeNum.number;
+
+
+                const like = await db.like.findOne({raw:true, where:{user_Id:user.user_Id, boardId:findboard[i].boardId}})
+                findboard[i].like = !!like;
             }
             res.json({
                 result:1,
@@ -77,6 +84,13 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
 
             const boardImage = await db.image.findAll({raw:true, attributes:['filename'], where:{boardId:findboard[i].boardId}})
             findboard[i].images = boardImage;
+
+            let likeNum = await db.like.findOne({raw:true, attributes:[[Sequelize.fn('COUNT', Sequelize.col('*')), 'number']], where:{boardId: findboard[i].boardId}})
+			findboard[i].likeNum = likeNum.number;
+
+
+			const like = await db.like.findOne({raw:true, where:{user_Id:user.user_Id, boardId:findboard[i].boardId}})
+			findboard[i].like = !!like;
         }
 
         let relation;

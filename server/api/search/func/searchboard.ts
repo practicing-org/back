@@ -43,6 +43,13 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
 
       const boardImage = await db.image.findAll({raw:true, attributes:['filename'], where:{boardId:findBoard[i].boardId}})
       findBoard[i].images = boardImage;
+
+      let likeNum = await db.like.findOne({raw:true, attributes:[[Sequelize.fn('COUNT', Sequelize.col('*')), 'number']], where:{boardId: findBoard[i].boardId}})
+			findBoard[i].likeNum = likeNum.number;
+
+
+			const like = await db.like.findOne({raw:true, where:{user_Id:user.user_Id, boardId:findBoard[i].boardId}})
+			findBoard[i].like = !!like;
     }
 
     res.json({
