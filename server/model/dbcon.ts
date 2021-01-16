@@ -3,19 +3,12 @@ import config from './config.json';
 
 
 
-const sequelize = new Sequelize(
-    config.db_server.database,
-    config.db_server.user,
-    config.db_server.password,
-    {
-        host:'localhost',
-        dialect:'mysql',
-        pool:{
-            max:10,
-            min: 0,
-            idle: 10000
-        }
-    }
+const sequelize = new Sequelize(config.path,{
+    pool:{
+        max:10,
+        min: 0,
+        idle: 10000
+    }}
 )
 
 let db:{[k:string]:any} = {};
