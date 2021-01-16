@@ -35,6 +35,7 @@
     "mysql": "^2.18.1",
     "mysql2": "^2.2.5",
     "sequelize": "^6.3.5",
-    "source-map-support": "^0.5.19"
+    "source-map-support": "^0.5.19",
+    "ts-node": "^9.1.1"
   }
 }
