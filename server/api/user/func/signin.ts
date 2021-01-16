@@ -7,7 +7,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
         console.log('you send null');
         res.status(400).json({
             message:"you send null",
-            result:"0"
+            result:0
         })
         return;
     }
@@ -17,7 +17,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
             console.log("id is wrong");
             res.status(401).json({
                 message:"server can`t find your id",
-                result:"0"
+                result:0
             })
             return;
         }
@@ -35,7 +35,8 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
     }catch(err){
         console.log(err);
         res.status(500).json({
-            message:"server has error now"
+            message:"server has error now",
+            result:0
         })
     }
 }

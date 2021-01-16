@@ -19,8 +19,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
 
         await db.user.update({name:name, password:hashPassword},{where:{userId:userId}})
         res.json({
-            result:1,
-            message:'please delete your token for data'
+            result:1
         })
     }catch(err){
         console.log(err);

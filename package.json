@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node server/src/www.ts",
+    "start": "ts-node server/index.ts",
     "build": "webpack --config webpack.config.js"
   },
   "keywords": [],
