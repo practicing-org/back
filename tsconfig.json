@@ -1,11 +1,17 @@
 {
     "compilerOptions":{
         "module":"Commonjs",
+        "target":"ES6",
         "noImplicitAny": true,
         "removeComments": true,
         "preserveConstEnums": true,
         "sourceMap": true,
         "resolveJsonModule": true,
-        "esModuleInterop": true
-    }
+        "esModuleInterop": true,
+        "outDir":"build"
+    },"moduleResolution": "node",
+    "exclude": [
+      "node_modules",
+      "view"
+    ]
 }

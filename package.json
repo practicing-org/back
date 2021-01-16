@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node server/index.ts",
-    "build": "webpack --config webpack.config.js"
+    "start": "node build/index.js",
+    "build": "tsc"
   },
   "engines": {
     "npm": "7.3.0",
