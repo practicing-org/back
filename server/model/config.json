@@ -1,0 +1,7 @@
+{
+    "db_server":{
+        "database":"sns",
+        "user":"root",
+        "password":"pure6671"
+    }
+}
