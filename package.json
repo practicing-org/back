@@ -9,7 +9,7 @@
   },
   "engines": {
     "npm": "7.3.0",
-    "ts-node": "9.1.1"
+    "node": "15.5.0"
   },
   "keywords": [],
   "author": "",
