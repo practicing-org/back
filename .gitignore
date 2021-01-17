@@ -1,1 +1,4 @@
 /node_modules
+/server/upload
+/server/middleware/hashS.json
+/server/model/config.json
