@@ -6,25 +6,25 @@ import {QueryTypes, Sequelize} from 'sequelize';
 export default async (req:Request,res:Response, next:NextFunction)=>{
 	
 	const {userId, boardIds} = req.body;
+	if(!boardIds){
+		console.log('you send null');
+		res.status(401).json({
+				result:0,
+				message:"client send null"
+		})
+	}
 	const board_Ids = "("+boardIds.join()+")";
 	//공계범위가 전체인 글과 친구의 글 내가쓴 글에서 이미 로드된 글을 제외한 20글들  
 	const query = "select * from board where boardId not in"+board_Ids+"and (`showId` = 'all' or (`showId` = 'me' and user_Id = :user_Id) or (`showId` = 'friend' and (user_Id = ANY(select user_Id from friend where friend =:user_Id and user_Id = ANY(select friend from friend where user_Id =:user_Id)) or user_Id = :user_Id))) order by boardId desc limit 20"
 
 	try{
-		let findBoard:any;
+		
 		const user = await db.user.findOne({raw:true, where:{userId:userId}})
-		await db.sequelize.query(query, {replacements: {user_Id:user.user_Id}}, { type: QueryTypes.SELECT }).then(
-			function (result:any){
-				result = result[0]
-				for(let i = 0; i < result[0].length; i++){
-						
-						result[i] = result[i][0];
-						console.log(i);
-				}
-				findBoard = result;
-			}
-	)
-	
+		let findBoard = await db.sequelize.query(query, {replacements: {user_Id:user.user_Id}, type: QueryTypes.SELECT })
+	console.log(findBoard)
+	if(!findBoard){
+		findBoard = [];
+	}
 	for(let i = 0; i < findBoard.length; i++){
 			//userName and profile
 			const boardUser = await db.user.findOne({raw:true, attributes:["name"], where:{user_Id:findBoard[i].user_Id}})

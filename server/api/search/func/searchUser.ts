@@ -5,7 +5,7 @@ import {Op, Sequelize} from 'sequelize';
 export default async(req:Request, res:Response, next:NextFunction)=>{
   const {user} = req.params;
   const {userId, user_Ids} = req.body;
-  if(!user||!userId){
+  if(!user||!userId||!user_Ids){
     console.log('you send null');
     res.status(401).json({
       result:0,
@@ -15,9 +15,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
   console.log(user);
   let valueArray = user.split(' ');
   let value = '';
-  for(let i = 0; i < valueArray.length; i++){
-    value += valueArray[i]+"|";
-  }
+  value = valueArray.join("|");
 
   try{
     const User = await db.user.findOne({raw:true, attributes:['user_Id'], where:{userId:userId}})

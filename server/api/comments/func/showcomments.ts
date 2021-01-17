@@ -7,7 +7,7 @@ import {Op} from 'sequelize'
 export default async(req:Request, res:Response, next:NextFunction)=>{
     let {boardId, commentsId, comments_Ids} = req.body;
     console.log(req.body);
-    if(!boardId){
+    if(!boardId||!comments_Ids){
         console.log('you send null');
         res.status(401).json({
             result:0,
@@ -21,7 +21,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
     try{
         let comments = await db.comments.findAll({raw:true, include:[{model:db.image, required: false, attributes:["filename"]}],
         where:{boardId:boardId, FcommentsId:commentsId, commentsId:{[Op.notIn]:comments_Ids}}, limit:20, order:[["commentsId","desc"]]});
-        
+        console.log(comments)
         for(let i = 0; i < comments.length; i++){
             const user = await db.user.findOne({raw:true, attributes:["user_Id","name"], where:{user_Id:comments[i].user_Id}})
             let profile = await db.image.findOne({raw:true, attributes:["filename"], where:{user_Id:comments[i].user_Id, profile:1}})

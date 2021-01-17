@@ -6,7 +6,7 @@ import {Op, Sequelize} from 'sequelize';
 export default async(req:Request, res:Response, next:NextFunction)=>{
   const { userId,boardIds } = req.body;
   let board = req.params.board;
-  if(!board||!userId){
+  if(!board||!userId||!boardIds){
     console.log('you send null');
     res.status(401).json({
       result:0,
@@ -16,9 +16,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
 
   let valueArray = board.split(' ');
   let value = '';
-  for(let i = 0; i < valueArray.length; i++){
-    value += valueArray[i]+"|";
-  }
+  value = valueArray.join('|');
   console.log(valueArray);
   
   try{

@@ -4,16 +4,18 @@ import {QueryTypes, Sequelize, Op} from 'sequelize';
 
 export default async(req:Request, res:Response, next:NextFunction)=>{
     const {userId, boardIds} = req.body;
-    const board_Ids = "("+boardIds.join()+")";
     const selectuser:any = +req.params.user_Id;
+
     console.log(userId, selectuser)
-    if(!userId||!selectuser){
+    if(!userId||!selectuser||!boardIds){
         console.log('you send null');
         res.status(400).json({
             result:1,
             message:"you send null"
         })
     }
+    const board_Ids = "("+boardIds.join()+")";
+    
     try{
         const user = await db.user.findOne({raw:true, where:{userId:userId}});
 
@@ -28,7 +30,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
         selectUser.profile = profile.filename;
 
         if(user.user_Id == selectuser){
-            let findboard = await db.board.findAll({raw:true, where:{user_Id:selectUser.user_Id, boarId:{[Op.notIn]:boardIds}},order:[["boardId","desc"]], limit:20});
+            let findboard = await db.board.findAll({raw:true, where:{user_Id:selectUser.user_Id, boardId:{[Op.notIn]:boardIds}},order:[["boardId","desc"]], limit:20});
             for(let i = 0; i < findboard.length; i++){
                 const user = await db.user.findOne({raw:true, attributes:["user_Id","name"], where:{user_Id:findboard[i].user_Id}})
                 let profile = await db.image.findOne({raw:true, attributes:["filename"], where:{user_Id:findboard[i].user_Id, profile:1}})
