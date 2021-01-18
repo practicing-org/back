@@ -37,7 +37,7 @@ const checkTokenForSignin = async (req:Request, res:Response, next:NextFunction)
 const makeTokenForSignin = async (req:Request, res:Response, next:NextFunction)=>{
     const {userId,long} = req.body;
     let day:number = 1;
-    if(long == 1){
+    if(long){
         day = 30;
     }
     try{
