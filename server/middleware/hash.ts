@@ -10,7 +10,7 @@ const hash = async (req:Request, res:Response, next:NextFunction) =>{
             res.status(400).json({
                 message:'password is null'
             })
-        }
+        } 
         const Secrete:string  = secrete.secret;
         req.body.hashPassword = await crypto.createHash('sha256', password).update(Secrete).digest('hex');
         next();
