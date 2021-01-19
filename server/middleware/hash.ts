@@ -1,18 +1,20 @@
 import {Request, Response, NextFunction} from 'express';
 import crypto from 'crypto';
-import secrete from './hashS.json';
+
 
 const hash = async (req:Request, res:Response, next:NextFunction) =>{
     try{
         const password = req.body.password;
+        console.log(password)
         if(!password){
             console.log('password is null');
-            res.status(400).json({
+            res.json({
+                result:0,
                 message:'password is null'
             })
+            return;
         } 
-        const Secrete:string  = secrete.secret;
-        req.body.hashPassword = await crypto.createHash('sha256', password).update(Secrete).digest('hex');
+        req.body.hashPassword = crypto.createHash('sha256').update(password).digest('hex');
         next();
     }catch(err){
         console.log(err);

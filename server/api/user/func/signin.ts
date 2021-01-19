@@ -3,7 +3,8 @@ import db from '../../../model/dbcon';
 
 export default async(req:Request, res:Response, next:NextFunction)=>{
     const {userId, hashPassword} = req.body;
-    if(!userId && !hashPassword){
+    console.log(userId, hashPassword)
+    if(userId == '' || hashPassword == ''){
         console.log('you send null');
         res.status(400).json({
             message:"you send null",
@@ -13,6 +14,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
     }
     try{
         const finduser = await db.user.findOne({raw:true,where:{userId:userId}});
+        console.log(finduser)
         if(!finduser){
             console.log("id is wrong");
             res.status(401).json({
@@ -21,7 +23,12 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
             })
             return;
         }
-        if(finduser.password != hashPassword){
+        console.log(finduser.password);
+        console.log(hashPassword)
+        if(finduser.password == hashPassword){
+            console.log("signin success");
+            next();
+        }else{
             console.log("password is wrong")
             res.status(401).json({
                 message:"password is wrong",
@@ -29,8 +36,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
             })
             return;
         }
-        console.log("signin success");
-        next();
+        
         
     }catch(err){
         console.log(err);
