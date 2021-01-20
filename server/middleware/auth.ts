@@ -5,14 +5,14 @@ import secret from './hashS.json';
 const checkTokenForSignin = async (req:Request, res:Response, next:NextFunction)=>{
     console.log(req.body);
     const token = req.headers['authorization']
-    
+    console.log(token)
     if(!token){
         return res.status(403).json({
             err:"notoken"
         })
     }
     try{
-        await jsonwebtoken.verify(JSON.parse(token), secret.secret, (err:any,DecodedToken:any)=>{
+        await jsonwebtoken.verify(token, secret.secret, (err:any,DecodedToken:any)=>{
             
             if(err){
                 console.log("err = \n", err);

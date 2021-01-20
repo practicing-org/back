@@ -8,7 +8,7 @@ const hash = async (req:Request, res:Response, next:NextFunction) =>{
         console.log(password)
         if(!password){
             console.log('password is null');
-            res.json({
+            res.status(400).json({
                 result:0,
                 message:'password is null'
             })

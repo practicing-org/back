@@ -24,6 +24,7 @@ import Image from './table/image';
 import Comments from './table/comments';
 import Board from './table/board';
 import Show from './table/show';
+import Gender from './table/sex'
 
 db.user = User(db.sequelize,db.Sequelize);
 db.friend = Friend(db.sequelize, db.Sequelize);
@@ -32,6 +33,7 @@ db.comments = Comments(db.sequelize, db.Sequelize);
 db.show = Show(db.sequelize, db.Sequelize);
 db.like = Like(db.sequelize, db.Sequelize);
 db.image = Image(db.sequelize, db.Sequelize);
+db.gender = Gender(db.sequelize, db.Sequelize);
 
 
 //relationship
@@ -41,14 +43,16 @@ db.friend.belongsTo(db.user,{
     foreignKey:'user_Id',
     onDeleted:'cascade',
     onUpdate:'cascade',
+    allowNull:false,
 })
 db.user.hasMany(db.friend,{
     foreignKey:'friend',
     onDeleted:'cascade',
     onUpdate:'cascade',
+    allowNull:false,
 });
 db.friend.belongsTo(db.user,{
-    foreignKey:'friend'
+    foreignKey:'friend',
 })
 
 db.user.hasMany(db.board,{
@@ -57,6 +61,7 @@ db.board.belongsTo(db.user,{
     foreignKey:'user_Id',
     onDeleted:'cascade',
     onUpdate:'cascade',
+    allowNull:false,
 })
 db.show.hasMany(db.board,{
     foreignKey:'showId'})
@@ -64,6 +69,7 @@ db.board.belongsTo(db.show,{
     foreignKey:'showId',
     onDeleted:'cascade',
     onUpdate:'cascade',
+    allowNull:false,
 })
 
 db.user.hasMany(db.image,{
@@ -72,6 +78,7 @@ db.image.belongsTo(db.user,{
     foreignKey:'user_Id',
     onDeleted:'cascade',
     onUpdate:'cascade',
+    allowNull:false,
 })
 db.board.hasMany(db.image,{
     foreignKey:'boardId'})
@@ -95,6 +102,7 @@ db.comments.belongsTo(db.user,{
     foreignKey:'user_Id',
     onDeleted:'cascade',
     onUpdate:'cascade',
+    allowNull:false,
 })
 db.board.hasMany(db.comments,{
     foreignKey:'boardId'})
@@ -115,6 +123,7 @@ db.like.belongsTo(db.user,{
     foreignKey:'user_Id',
     onDeleted:'cascade',
     onUpdate:'cascade',
+    allowNull:false
 })
 db.board.hasMany(db.like,{
     foreignKey:'boardId'})
@@ -124,11 +133,22 @@ db.like.belongsTo(db.board,{
     onUpdate:'cascade',
 })
 db.comments.hasMany(db.like,{
-    foreignKey:'commentsId'})
+    foreignKey:'commentsId'
+})
 db.like.belongsTo(db.comments,{
     foreignKey:'commentsId',
     onDeleted:'cascade',
     onUpdate:'cascade',
+})
+
+db.gender.hasMany(db.user,{
+    foreignKey:'genderId'
+})
+db.user.belongsTo(db.gender,{
+    foreignKey:'genderId',
+    onDeleted:'cascade',
+    onUpdate:'cascade',
+    allowNull:false,
 })
 //
 

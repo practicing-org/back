@@ -25,6 +25,10 @@ const User = (sequelize:any, DataTypes:any)=>{
             field:'birthday',
             type:DataTypes.DATE,
             allowNull:false
+        },
+        message:{
+            field:"message",
+            type:DataTypes.STRING
         }
     },{
         tableName:'user',
