@@ -19,7 +19,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
     try{
         const user = await db.user.findOne({raw:true, where:{userId:userId}});
 
-        let selectUser = await db.user.findOne({raw:true,attributes:["user_Id","name","birthday"], where:{user_Id:selectuser}})
+        let selectUser = await db.user.findOne({raw:true,attributes:["user_Id","name"], where:{user_Id:selectuser}})
         console.log(selectUser);
         let profile = await db.image.findOne({raw:true, attributes:["filename"], where:{user_Id:selectuser, profile:1}})
 
