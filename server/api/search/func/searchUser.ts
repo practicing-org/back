@@ -12,7 +12,6 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
       message:'you send null'
     })
   }
-  console.log(user);
   let valueArray = user.split(' ');
   let value = '';
   value = valueArray.join("|");

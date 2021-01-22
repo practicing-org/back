@@ -24,7 +24,7 @@ import Image from './table/image';
 import Comments from './table/comments';
 import Board from './table/board';
 import Show from './table/show';
-import Gender from './table/sex'
+import Gender from './table/gender'
 
 db.user = User(db.sequelize,db.Sequelize);
 db.friend = Friend(db.sequelize, db.Sequelize);

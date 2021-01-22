@@ -5,7 +5,7 @@ import crypto from 'crypto';
 const hash = async (req:Request, res:Response, next:NextFunction) =>{
     try{
         const password = req.body.password;
-        console.log(password)
+
         if(!password){
             console.log('password is null');
             res.status(400).json({
@@ -18,6 +18,10 @@ const hash = async (req:Request, res:Response, next:NextFunction) =>{
         next();
     }catch(err){
         console.log(err);
+        res.status(500).json({
+            result:0,
+            message:'password is null'
+        })
     }
 }
 

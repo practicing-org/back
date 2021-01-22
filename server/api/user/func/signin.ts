@@ -3,7 +3,6 @@ import db from '../../../model/dbcon';
 
 export default async(req:Request, res:Response, next:NextFunction)=>{
     const {userId, hashPassword} = req.body;
-    console.log(userId, hashPassword)
     if(userId == '' || hashPassword == ''){
         console.log('you send null');
         res.status(400).json({
