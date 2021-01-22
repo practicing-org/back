@@ -3,10 +3,9 @@ import db from '../../../model/dbcon';
 import {QueryTypes, Sequelize, Op} from 'sequelize';
 
 export default async(req:Request, res:Response, next:NextFunction)=>{
-    const {userId, boardIds} = req.body;
-    const selectuser:any = +req.params.user_Id;
+    const {boardIds, selectuser}:any = req.query;
+    const userId = req.body.userId;
 
-    console.log(userId, selectuser)
     if(!userId||!selectuser||!boardIds){
         console.log('you send null');
         res.status(400).json({

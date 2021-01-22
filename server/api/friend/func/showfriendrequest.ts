@@ -3,7 +3,8 @@ import db from '../../../model/dbcon';
 import {QueryTypes} from 'sequelize';
 
 export default async(req:Request, res:Response, next:NextFunction)=>{
-    const {userId, user_Ids} = req.body;
+    const {userId} = req.body;
+    const {user_Ids}:any =req.query;
     const userIds = "("+user_Ids.join()+")";
     try{
         const user = await db.user.findOne({raw:true, where:{userId:userId}});

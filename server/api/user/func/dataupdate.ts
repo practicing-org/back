@@ -2,7 +2,8 @@ import {Request, Response, NextFunction} from 'express';
 import db from '../../../model/dbcon';
 
 export default async(req:Request, res:Response, next:NextFunction)=>{
-    let {userId, name, hashPassword} = req.body;
+    let { name, hashPassword} = req.query;
+    let userId = req.body.userId;
     try{
         const finduser = await db.user.findOne({raw:true, where:{userId:userId}});
         if(!userId){

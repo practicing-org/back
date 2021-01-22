@@ -3,8 +3,8 @@ import db from '../../../model/dbcon';
 import {Op, Sequelize} from 'sequelize';
 
 export default async(req:Request, res:Response, next:NextFunction)=>{
-  const {user} = req.params;
-  const {userId, user_Ids} = req.body;
+  const {user_Ids, user}:any = req.query;
+  const userId:string = req.body.userId;
   if(!user||!userId||!user_Ids){
     console.log('you send null');
     res.status(401).json({

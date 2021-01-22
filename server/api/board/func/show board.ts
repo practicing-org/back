@@ -5,7 +5,7 @@ import {QueryTypes, Sequelize} from 'sequelize';
 
 export default async (req:Request,res:Response, next:NextFunction)=>{
 	
-	const {userId, boardIds} = req.body;
+	const {userId, boardIds}:any = req.query;
 	if(!boardIds){
 		console.log('you send null');
 		res.status(401).json({

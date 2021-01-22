@@ -1,8 +1,6 @@
 import {Request, Response, NextFunction} from 'express';
 import path from 'path';
-import multer from 'multer';
 import db from '../../../model/dbcon';
-import user from '../../user/user';
 
 
 export default async (req:Request, res:Response, next:NextFunction)=>{

@@ -4,7 +4,8 @@ import db from '../../../model/dbcon';
 import {Op, Sequelize} from 'sequelize';
 
 export default async(req:Request, res:Response, next:NextFunction)=>{
-  const { userId,boardIds } = req.body;
+  const {boardIds}:any = req.body;
+  const {userId} = req.body;
   let board = req.params.board;
   if(!board||!userId||!boardIds){
     console.log('you send null');
