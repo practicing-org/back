@@ -5,13 +5,17 @@ import {QueryTypes, Sequelize} from 'sequelize';
 
 export default async (req:Request,res:Response, next:NextFunction)=>{
 	
-	const {userId, boardIds}:any = req.query;
+	let boardIds:any = req.query.boardIds;
+	boardIds = JSON.parse(boardIds);
+	const userId = req.body.userId;
+	console.log(req.query)
 	if(!boardIds){
 		console.log('you send null');
 		res.status(401).json({
 				result:0,
 				message:"client send null"
 		})
+		return;
 	}
 	const board_Ids = "("+boardIds.join()+")";
 	//공계범위가 전체인 글과 친구의 글 내가쓴 글에서 이미 로드된 글을 제외한 20글들  

@@ -6,6 +6,8 @@ import db from '../../../model/dbcon';
 export default async (req:Request, res:Response, next:NextFunction)=>{
     const {userId, title, date, contents, profile, show} = req.body;
     const files:any = req.files;
+
+    console.log(req.body, req.files)
     if(!userId || !title || !date || (!contents&&!files) ||!show){
         console.log('client send null');
         res.status(400).json({

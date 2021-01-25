@@ -19,7 +19,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
         const writeComments = await db.comments.create({user_Id:user.user_Id, comment:comment, boardId:boardId, commentsId:commentsId});
         if(file){
             await db.image.create({
-                filename:path.join(__dirname, '..','..','..','upload',file.filename),
+                filename: "/image/"+file.filename,
                 user_Id:user.user_Id,
                 profile:0,
                 commentsId:writeComments.dataValues.boardId,

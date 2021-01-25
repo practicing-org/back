@@ -6,7 +6,7 @@ const checkTokenForSignin = async (req:Request, res:Response, next:NextFunction)
     console.log(req.body);
     const token = req.headers['authorization']
     console.log(token)
-    if(!token){
+    if(token == ''){
         return res.status(403).json({
             err:"notoken"
         })
@@ -55,7 +55,7 @@ const makeTokenForSignin = async (req:Request, res:Response, next:NextFunction)=
                 })
                 return;
             }
-            console.log('server make token');
+            console.log('token')
             res.json({
                 token,
                 result:1

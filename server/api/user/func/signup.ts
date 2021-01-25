@@ -14,6 +14,7 @@ return;
 try {
 const finduser = await db.user.findOne({raw:true, where:{userId:userId}});
 const findGender = await db.gender.findOne({raw:true, where:{genderId:genderId}})
+
 if(finduser){
     console.log('user is already exist');
     res.status(400).json({
