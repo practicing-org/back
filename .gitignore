@@ -1,5 +1,0 @@
-/node_modules
-/build
-/package-lock.json
-/server/model/config.json
-/server/middleware/hashS.json
