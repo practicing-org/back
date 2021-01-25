@@ -22,13 +22,14 @@ if(finduser){
     })
     return;
 }
-if(!genderId){
+if(!findGender){
     console.log('cant find your gender');
     res.status(400).json({
         message:"Are you an alien?",
         result:0
 
     })
+    return;
 }
 await db.user.create({userId:userId, password:hashPassword, name:name, genderId:genderId})
 res.json({
