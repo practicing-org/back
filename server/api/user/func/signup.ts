@@ -3,8 +3,7 @@ import db from '../../../model/dbcon';
 
 export default async (req:Request, res:Response, next:NextFunction)=>{
 const {userId, hashPassword, name, genderId} = req.body;
-console.log(req.body)
-if(!userId || !hashPassword || !name || !genderId){
+if(!userId || !hashPassword || !name ){
 console.log('signup can`t get null');
 res.status(400).json({
     message:'you send null',
