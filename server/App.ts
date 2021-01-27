@@ -7,7 +7,8 @@ const app = express();
 app.use(bodyParser.urlencoded())
 app.use(express.json());
 app.use(cors());
-app.use('/image', express.static('./upload'))
+console.log(__dirname);
+app.use('/image', express.static(__dirname+'/upload'))
 app.use(router);
 
 

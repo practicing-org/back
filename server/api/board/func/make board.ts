@@ -35,7 +35,7 @@ export default async (req:Request, res:Response, next:NextFunction)=>{
             }
             files.map(async(file:any)=>{
                 await db.image.create({
-                    filename:path.join(__dirname, '..','..','..','upload',file.filename),
+                    filename: "/image/"+file.filename,
                     user_Id:user.user_Id,
                     profile:profile,
                     boardId:makeNewBoard.dataValues.boardId,

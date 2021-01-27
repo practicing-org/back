@@ -3,23 +3,22 @@ import jsonwebtoken from 'jsonwebtoken';
 import secret from './hashS.json';
 
 const checkTokenForSignin = async (req:Request, res:Response, next:NextFunction)=>{
-    console.log(req.body);
     const token = req.headers['authorization']
-    console.log(token)
     if(token == ''){
-        return res.status(403).json({
+        res.status(403).json({
             err:"notoken"
         })
+        return;
     }
     try{
         await jsonwebtoken.verify(token, secret.secret, (err:any,DecodedToken:any)=>{
             
             if(err){
                 console.log("err = \n", err);
-                res.status(400).json({
+                res.status(403).json({
                     message:"your token is wrong"
                 })
-                return;
+                return false;
             }
             req.body.userId = DecodedToken.sub;
             req.body.long = DecodedToken.long;
@@ -30,6 +29,7 @@ const checkTokenForSignin = async (req:Request, res:Response, next:NextFunction)
         res.status(500).json({
             message:"server can't decode token"
         })
+        return
     }
     
 }
@@ -66,6 +66,7 @@ const makeTokenForSignin = async (req:Request, res:Response, next:NextFunction)=
         res.status(500).json({
             message:"server can't make token"
         })
+        return
     }
 }
 
@@ -90,12 +91,14 @@ const makeTokenForDataUpdate = async (req:Request, res:Response, next:NextFuncti
                 tokenForUpdate:token,
                 result:1
             })
+            return
         })
     } catch(err){
         console.log(err);
         res.status(500).json({
             message:"server can't make token"
         })
+        return
     }
 }
 const checkTokenForDataUpdate = async (req:Request, res:Response, next:NextFunction)=>{
@@ -123,6 +126,7 @@ const checkTokenForDataUpdate = async (req:Request, res:Response, next:NextFunct
         res.status(500).json({
             message:"server can't decode token"
         })
+        return
     }
     
 }

@@ -5,7 +5,7 @@ import {Op} from 'sequelize'
 
 
 export default async(req:Request, res:Response, next:NextFunction)=>{
-    let {boardId, commentsId, comments_Ids} = req.body;
+    let {boardId, commentsId, comments_Ids} = req.query;
     console.log(req.body);
     if(!boardId||!comments_Ids){
         console.log('you send null');
@@ -23,14 +23,14 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
         where:{boardId:boardId, FcommentsId:commentsId, commentsId:{[Op.notIn]:comments_Ids}}, limit:20, order:[["commentsId","desc"]]});
         console.log(comments)
         for(let i = 0; i < comments.length; i++){
-            const user = await db.user.findOne({raw:true, attributes:["user_Id","name"], where:{user_Id:comments[i].user_Id}})
+            const user = await db.user.findOne({raw:true, attributes:["genderId","name"], where:{user_Id:comments[i].user_Id}})
             let profile = await db.image.findOne({raw:true, attributes:["filename"], where:{user_Id:comments[i].user_Id, profile:1}})
 
             if(profile === null){
                 profile = {};
                 profile.filename = 0;
             }
-            comments[i].user = {name:user.name, profile:profile.filename}
+            comments[i].user = {name:user.name, profile:profile.filename, gender:user.genderId}
 
             let childComments = await db.comments.findOne({raw:true, attributes:[[Sequelize.fn('COUNT', Sequelize.col('*')), 'child']], where:{FcommentsId: comments[i].commentsId}})
             comments[i].childComments = childComments.child

@@ -31,7 +31,7 @@ export default async (req:Request,res:Response, next:NextFunction)=>{
 	}
 	for(let i = 0; i < findBoard.length; i++){
 			//userName and profile
-			const boardUser = await db.user.findOne({raw:true, attributes:["name"], where:{user_Id:findBoard[i].user_Id}})
+			const boardUser = await db.user.findOne({raw:true, attributes:["name","genderId"], where:{user_Id:findBoard[i].user_Id}})
 			let profile = await db.image.findOne({raw:true, attributes:["filename"], where:{user_Id:findBoard[i].user_Id, profile:1}})
 			
 			if(profile == null){
@@ -39,7 +39,7 @@ export default async (req:Request,res:Response, next:NextFunction)=>{
 				profile.filename = 0;
 			}
 
-			findBoard[i].user = {userName: boardUser.name, profile:profile.filename};
+			findBoard[i].user = {userName: boardUser.name, profile:profile.filename, gender:user.genderId};
 
 			const boardImage = await db.image.findAll({raw:true, attributes:['filename'], where:{boardId:findBoard[i].boardId}})
 			findBoard[i].images = boardImage;
