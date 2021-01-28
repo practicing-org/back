@@ -19,7 +19,7 @@ export default async (req:Request,res:Response, next:NextFunction)=>{
 	}
 	const board_Ids = "("+boardIds.join()+")";
 	//공계범위가 전체인 글과 친구의 글 내가쓴 글에서 이미 로드된 글을 제외한 20글들  
-	const query = "select * from board where boardId not in"+board_Ids+"and (`showId` = 'all' or (`showId` = 'me' and user_Id = :user_Id) or (`showId` = 'friend' and (user_Id = ANY(select user_Id from friend where friend =:user_Id and user_Id = ANY(select friend from friend where user_Id =:user_Id)) or user_Id = :user_Id))) order by boardId desc limit 20"
+	const query = "select * from board where boardId not in"+board_Ids+"and (`showId` = 'all' or (`showId` = 'me' and user_Id = :user_Id) or (`showId` = 'friend' and (user_Id = ANY(select user_Id from friend where friend =:user_Id and user_Id = ANY(select friend from friend where user_Id =:user_Id)) or user_Id = :user_Id))) order by boardId desc limit 4"
 
 	try{
 		
