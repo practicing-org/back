@@ -27,7 +27,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
       [Op.or]:[{showId:'all'}, {showId:'me', user_id:User.user_Id}, {showId:'friend', user_Id:{[Op.in]:[
         Sequelize.literal('select user_Id from friend where friend =:user_Id and user_Id = ANY(select friend from friend where user_Id =:user_Id)')]
       }}],[Op.or]:[{contents:{[Op.regexp]:value}}, {title:{[Op.regexp]:value}}]
-    }, replacements:{user_Id:User.user_Id},order:[["boardId","desc"]], limit:20})
+    }, replacements:{user_Id:User.user_Id},order:[["boardId","desc"]], limit:5})
 
     for(let i = 0; i < findBoard.length; i++){
       const user = await db.user.findOne({raw:true, attributes:["name"], where:{user_Id:findBoard[i].user_Id}})

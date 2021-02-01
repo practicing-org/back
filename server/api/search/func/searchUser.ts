@@ -20,7 +20,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
     const User = await db.user.findOne({raw:true, attributes:['user_Id'], where:{userId:userId}})
 
     
-    let findUser = await db.user.findAll({raw:true, attributes:['user_Id','name'], where:{name:{[Op.regexp]:value}, user_Id:{[Op.notIn]:user_Ids}}, limit:20, order:[["user_Id","desc"]]});
+    let findUser = await db.user.findAll({raw:true, attributes:['user_Id','name'], where:{name:{[Op.regexp]:value}, user_Id:{[Op.notIn]:user_Ids}}, limit:5, order:[["user_Id","desc"]]});
     console.log(findUser);
     for(let i = 0;i < findUser.length; i++){
       let profile = await db.image.findOne({raw:true,
