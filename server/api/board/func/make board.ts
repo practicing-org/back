@@ -4,11 +4,11 @@ import db from '../../../model/dbcon';
 
 
 export default async (req:Request, res:Response, next:NextFunction)=>{
-    const {userId, title, date, contents, profile, show} = req.body;
+    const {userId, date, contents, profile, show} = req.body;
     const files:any = req.files;
 
     console.log(req.body, req.files)
-    if(!userId || !title || !date || (!contents&&!files) ||!show){
+    if(!userId || !date || (!contents&&!files) ||!show){
         console.log('client send null');
         res.status(400).json({
             message:"don't send null",
@@ -26,7 +26,7 @@ export default async (req:Request, res:Response, next:NextFunction)=>{
             return;
         }
         const makeNewBoard = await db.board.create(
-            {user_Id:user.user_Id, title:title, date:date, contents:contents, showId:show}
+            {user_Id:user.user_Id, date:date, contents:contents, showId:show}
         )
         
         if(files[0]){

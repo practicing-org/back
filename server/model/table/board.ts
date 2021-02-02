@@ -6,11 +6,6 @@ const Board = (sequelize:any, datatypes:any)=>{
             autoIncrement: true,
             primaryKey: true
         },
-        title:{
-            field:'title',
-            type:datatypes.STRING(60),
-            allowNull:false,
-        },
         date:{
             field:'date',
             type:datatypes.DATE,

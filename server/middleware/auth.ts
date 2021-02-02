@@ -4,6 +4,7 @@ import secret from './hashS.json';
 
 const checkTokenForSignin = async (req:Request, res:Response, next:NextFunction)=>{
     const token = req.headers['authorization']
+    console.log(token)
     if(token == ''){
         res.status(403).json({
             err:"notoken"
