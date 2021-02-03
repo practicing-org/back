@@ -8,6 +8,7 @@ export default async (req:Request,res:Response, next:NextFunction)=>{
 	let boardIds:any = req.query.boardIds;
 	boardIds = JSON.parse(boardIds);
 	const userId = req.body.userId;
+	console.log(boardIds)
 	if(!boardIds){
 		console.log('you send null');
 		res.status(401).json({
@@ -17,6 +18,7 @@ export default async (req:Request,res:Response, next:NextFunction)=>{
 		return;
 	}
 	const board_Ids = "("+boardIds.join()+")";
+	console.log(board_Ids)
 	//공계범위가 전체인 글과 친구의 글 내가쓴 글에서 이미 로드된 글을 제외한 20글들  
 	const query = "select board.*, GROUP_CONCAT(file.filename) as images from board left outer join file using(boardId) where board.boardId not in"+board_Ids+"and (`showId` = 'all' or (`showId` = 'me' and board.user_Id = :user_Id) or (`showId` = 'friend' and (board.user_Id = ANY(select user_Id from friend where friend =:user_Id and user_Id = ANY(select friend from friend where user_Id =:user_Id)) or board.user_Id = :user_Id))) GROUP BY board.boardId order by boardId desc limit 4"
 

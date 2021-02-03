@@ -8,7 +8,6 @@ app.use(bodyParser.urlencoded())
 app.use(express.json());
 app.use(cors());
 console.log(__dirname);
-app.use('/image', express.static(__dirname+'/upload'))
 app.use(router);
 
 
