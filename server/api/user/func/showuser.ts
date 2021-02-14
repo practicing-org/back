@@ -86,10 +86,10 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
             relation = "nobody";
         }
         else if(findFriendUserId&&!findFriendFriend){
-            relation = "me send";
+            relation = "me";
         }
         else if(!findFriendUserId&&findFriendFriend){
-            relation = "other send"
+            relation = "other"
         }
         else{
             relation = "both"

@@ -4,7 +4,7 @@ import path from 'path';
 
 export default async(req:Request, res:Response, next:NextFunction)=>{
     const {userId, comment, boardId, commentsId} = req.body;
-    const file = req.file;
+    const file:any = req.file;
 
     if(!userId||!comment||!boardId){
         console.log("client send null");
@@ -16,10 +16,10 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
     }
     try{
         const user = await db.user.findOne({raw:true, where:{userId:userId}});
-        const writeComments = await db.comments.create({user_Id:user.user_Id, comment:comment, boardId:boardId, commentsId:commentsId});
+        const writeComments = await db.comments.create({user_Id:user.user_Id, comment:comment, boardId:Number(boardId), FcommentsId:commentsId != 'null' ?Number(commentsId):null});
         if(file){
             await db.image.create({
-                filename: "/image/"+file.filename,
+                filename: file.location,
                 user_Id:user.user_Id,
                 profile:0,
                 commentsId:writeComments.dataValues.boardId,

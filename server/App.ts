@@ -7,7 +7,6 @@ const app = express();
 app.use(bodyParser.urlencoded())
 app.use(express.json());
 app.use(cors());
-console.log(__dirname);
 app.use(router);
 
 
