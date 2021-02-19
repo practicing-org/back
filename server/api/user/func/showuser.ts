@@ -10,11 +10,9 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
 
     const userId = req.body.userId;
 
-<<<<<<< HEAD
-    console.log(boardIds, selectusers)
-=======
-    console.log(boardIds, selectuser);
->>>>>>> 0aee48259c37d25f31415fc2958f3d682f5b7e3f
+
+    console.log(boardIds, selectuser)
+
     if(!userId||!selectuser||!boardIds){
         console.log('you send null');
         res.status(400).json({
