@@ -14,23 +14,14 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
         })
         return;
     }
-
+    const date = new Date();
     try{
         const user = await db.user.findOne({raw:true, where:{userId:userId}})
 
         console.log(user);
-        const findFriendUserId = await db.friend.findOne({raw:true, where:{user_Id:user.user_Id, friend:friendId}})
-        const findFriendFriend = await db.friend.findOne({raw:true, where:{user_Id:friendId, friend:user.user_Id}})
-        console.log(findFriendUserId, findFriendFriend)
-        if(!findFriendUserId){
-            await db.friend.create({user_Id:user.user_Id, friend:friendId, date:Date.now()});
-        }
-        else if(findFriendUserId&&!findFriendFriend){
-            await db.friend.destroy({where:{user_Id:user.user_Id, friend:friendId}})
-        }
-        else if(findFriendUserId&&findFriendFriend){
-            await db.friend.destroy({where:{[Op.or]:[{user_Id:user.user_Id, friend:friendId}, {user_Id:friendId, friend:user.user_Id}]} })
-        }
+
+        await db.friend.destroy({where:{user_Id:friendId, friend:user.user_Id}})
+
         res.json({
             result:1
         })

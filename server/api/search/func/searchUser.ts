@@ -44,7 +44,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
           findUser[i].relation = "me";
       }
       else if(!findFriendUserId&&findFriendFriend){//다른 사람이 친추를 보냈을 때
-          findUser[i].relation = "you"
+          findUser[i].relation = "other"
       }
       else{
           findUser[i].relation = "both"//둘다 친추 보냈을 때

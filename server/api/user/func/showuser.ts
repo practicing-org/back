@@ -85,7 +85,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
         const findFriendFriend = await db.friend.findOne({raw:true, where:{user_Id:selectuser, friend:user.user_Id}})
         console.log(findFriendUserId, findFriendFriend)
         if(!findFriendUserId&&!findFriendFriend){
-            relation = "nobody";
+            relation = "no";
         }
         else if(findFriendUserId&&!findFriendFriend){
             relation = "me";
