@@ -6,6 +6,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
     const {boardIds, selectuser}:any = req.query;
     const userId = req.body.userId;
 
+    console.log(boardIds, selectusers)
     if(!userId||!selectuser||!boardIds){
         console.log('you send null');
         res.status(400).json({
