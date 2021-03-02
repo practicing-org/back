@@ -4,7 +4,7 @@ import {Op} from 'sequelize';
 
 export default async(req:Request, res:Response, next:NextFunction)=>{
     const userId = req.body.userId;
-    const friendId = req.body.friend;
+    const friendId = req.query.friend;
     console.log(userId, friendId);
     if(!userId && !friendId){
         console.log('client send null');
