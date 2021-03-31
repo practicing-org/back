@@ -3,7 +3,7 @@ import db from '../../../model/dbcon';
 import {QueryTypes, Sequelize, Op} from 'sequelize';
 
 export default async(req:Request, res:Response, next:NextFunction)=>{
-    let {boardIds, selectuser}:any = req.query;
+    let {boardIds, selectuser}:any = req.params;
 
     boardIds = JSON.parse(boardIds);
     selectuser = JSON.parse(selectuser);
