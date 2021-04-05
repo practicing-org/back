@@ -37,25 +37,25 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
         selectUser.profile = profile.filename;
 
         if(user.user_Id == selectuser){
-            let findboard = await db.board.findAll({raw:true, where:{user_Id:selectUser.user_Id, boardId:{[Op.notIn]:boardIds}},order:[["boardId","desc"]], limit:5});
-            for(let i = 0; i < findboard.length; i++){
+            let findBoard = await db.board.findAll({raw:true, where:{user_Id:selectUser.user_Id, boardId:{[Op.notIn]:boardIds}},order:[["boardId","desc"]], limit:5});
+            for(let i = 0; i < findBoard.length; i++){
 
-                findboard[i].user = {user_id:selectUser.user_Id,userName: selectUser.name, profile:profile.filename};
-                const boardImage = await db.image.findAll({raw:true, attributes:[[Sequelize.fn('GROUP_CONCAT',Sequelize.col("filename")),'filename']], where:{boardId:findboard[i].boardId}})
-                findboard[i].images = boardImage.filename;
+                findBoard[i].user = {user_id:selectUser.user_Id,userName: selectUser.name, profile:profile.filename};
+                const boardImage = await db.image.findAll({raw:true, attributes:[[Sequelize.fn('GROUP_CONCAT',Sequelize.col("filename")),'filename']], where:{boardId:findBoard[i].boardId}})
+                findBoard[i].images = boardImage.filename;
 
-                let likeNum = await db.like.findOne({raw:true, attributes:[[Sequelize.fn('COUNT', Sequelize.col('*')), 'number']], where:{boardId: findboard[i].boardId}})
-                findboard[i].likeNum = likeNum.number;
+                let likeNum = await db.like.findOne({raw:true, attributes:[[Sequelize.fn('COUNT', Sequelize.col('*')), 'number']], where:{boardId: findBoard[i].boardId}})
+                findBoard[i].likeNum = likeNum.number;
 
 
-                const like = await db.like.findOne({raw:true, where:{user_Id:user.user_Id, boardId:findboard[i].boardId}})
-                findboard[i].like = !!like;
+                const like = await db.like.findOne({raw:true, where:{user_Id:user.user_Id, boardId:findBoard[i].boardId}})
+                findBoard[i].like = !!like;
             }
             res.json({
                 result:1,
                 user:selectUser,
                 myProfile:true,
-                board:findboard
+                findBoard:findBoard
             })
             return;
         }
@@ -63,24 +63,24 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
         
         //공계범위가 전체인 글과 친구의 글 내가쓴 글에서 이미 로드된 글을 제외한 20글들  
         const query = "select board.*, GROUP_CONCAT(file.filename) as images from board left outer join file using(boardId) where board.boardId not in"+board_Ids+"and (`showId` = 'all' or (`showId` = 'friend' and (board.user_Id = ANY(select user_Id from friend where friend =:user_Id and user_Id = ANY(select friend from friend where user_Id =:user_Id and friend =:selectuser_Id)) )))GROUP BY board.boardId order by boardId desc limit 5"
-        let findboard:any;
+        let findBoard:any;
         await db.sequelize.query(query, {replacements: {user_Id:user.user_Id, selectuser_Id:selectuser}}, { type: QueryTypes.SELECT }).then(
             function (result:any){
                 console.log(result)
                 result = result[0]
-                findboard = result;
+                findBoard = result;
             }
         )
-        console.log(findboard)
-        for(let i = 0; i < findboard.length; i++){
-            findboard[i].user = {user_id:selectUser.user_Id,userName: selectUser.name, profile:profile.filename};
+        console.log(findBoard)
+        for(let i = 0; i < findBoard.length; i++){
+            findBoard[i].user = {user_id:selectUser.user_Id,userName: selectUser.name, profile:profile.filename};
 
-            let likeNum = await db.like.findOne({raw:true, attributes:[[Sequelize.fn('COUNT', Sequelize.col('*')), 'number']], where:{boardId: findboard[i].boardId}})
-			findboard[i].likeNum = likeNum.number;
+            let likeNum = await db.like.findOne({raw:true, attributes:[[Sequelize.fn('COUNT', Sequelize.col('*')), 'number']], where:{boardId: findBoard[i].boardId}})
+			findBoard[i].likeNum = likeNum.number;
 
 
-			const like = await db.like.findOne({raw:true, where:{user_Id:user.user_Id, boardId:findboard[i].boardId}})
-			findboard[i].like = !!like;
+			const like = await db.like.findOne({raw:true, where:{user_Id:user.user_Id, boardId:findBoard[i].boardId}})
+			findBoard[i].like = !!like;
         }
 
         let relation;
@@ -105,7 +105,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
             user:selectUser,
             myProfile:false,
             relation:relation,
-            board:findboard
+            findBoard:findBoard
         })
         return;
     }catch(err){
