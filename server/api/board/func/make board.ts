@@ -50,5 +50,6 @@ export default async (req:Request, res:Response, next:NextFunction)=>{
         res.status(500).json({
             message:"server has error now"
         })
+        return;
     }
 }
