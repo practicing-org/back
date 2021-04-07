@@ -47,7 +47,7 @@ export default async (req:Request, res:Response, next:NextFunction)=>{
         })
     }catch(err){
         console.log(err);
-        res.status(500).json({
+        res.status(502).json({
             message:"server has error now"
         })
         return;
