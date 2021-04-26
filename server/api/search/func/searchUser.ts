@@ -35,20 +35,20 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
 
       findUser[i].profile = profile.profile;
 
-      const findFriendUserId = await db.friend.findOne({raw:true, where:{user_Id:User.user_Id, friend:findUser[i].user_Id}})
-      const findFriendFriend = await db.friend.findOne({raw:true, where:{user_Id:findUser[i].user_Id, friend:User.user_Id}})
-      if(!findFriendUserId&&!findFriendFriend){//둘다 친추를 안 보냈을 때
-        findUser[i].relation = "no";
-      }
-      else if(findFriendUserId&&!findFriendFriend){//내가 친추 보냈을 때
-          findUser[i].relation = "me";
-      }
-      else if(!findFriendUserId&&findFriendFriend){//다른 사람이 친추를 보냈을 때
-          findUser[i].relation = "other"
-      }
-      else{
-          findUser[i].relation = "both"//둘다 친추 보냈을 때
-      }
+      // const findFriendUserId = await db.friend.findOne({raw:true, where:{user_Id:User.user_Id, friend:findUser[i].user_Id}})
+      // const findFriendFriend = await db.friend.findOne({raw:true, where:{user_Id:findUser[i].user_Id, friend:User.user_Id}})
+      // if(!findFriendUserId&&!findFriendFriend){//둘다 친추를 안 보냈을 때
+      //   findUser[i].relation = "no";
+      // }
+      // else if(findFriendUserId&&!findFriendFriend){//내가 친추 보냈을 때
+      //     findUser[i].relation = "me";
+      // }
+      // else if(!findFriendUserId&&findFriendFriend){//다른 사람이 친추를 보냈을 때
+      //     findUser[i].relation = "other"
+      // }
+      // else{
+      //     findUser[i].relation = "both"//둘다 친추 보냈을 때
+      // }
     }
     res.json({
       result:1,

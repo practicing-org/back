@@ -42,8 +42,10 @@ export default async (req:Request, res:Response, next:NextFunction)=>{
                 })
             })
         }
+        const findBoard = await db.board.findOne({raw:true, where:{boardId: makeNewBoard.dataValues.boardId}})
         res.json({
-            result:1
+            result:1,
+            findBoard:findBoard
         })
     }catch(err){
         console.log(err);

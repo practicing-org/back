@@ -18,7 +18,7 @@ db.Sequelize = Sequelize;
 db.queryInterface = sequelize.getQueryInterface();
 //table
 import User from './table/user';
-import Friend from './table/friend';
+
 import Like from './table/like';
 import Image from './table/image';
 import Comments from './table/comments';
@@ -27,7 +27,6 @@ import Show from './table/show';
 import Gender from './table/gender'
 
 db.user = User(db.sequelize,db.Sequelize);
-db.friend = Friend(db.sequelize, db.Sequelize);
 db.board = Board(db.sequelize, db.Sequelize);
 db.comments = Comments(db.sequelize, db.Sequelize);
 db.show = Show(db.sequelize, db.Sequelize);
@@ -37,23 +36,6 @@ db.gender = Gender(db.sequelize, db.Sequelize);
 
 
 //relationship
-db.user.hasMany(db.friend,{
-    foreignKey:'user_Id'});
-db.friend.belongsTo(db.user,{
-    foreignKey:'user_Id',
-    onDeleted:'cascade',
-    onUpdate:'cascade',
-    allowNull:false,
-})
-db.user.hasMany(db.friend,{
-    foreignKey:'friend',
-    onDeleted:'cascade',
-    onUpdate:'cascade',
-    allowNull:false,
-});
-db.friend.belongsTo(db.user,{
-    foreignKey:'friend',
-})
 
 db.user.hasMany(db.board,{
     foreignKey:'user_Id'})

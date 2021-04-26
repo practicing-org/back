@@ -3,5 +3,6 @@
 /package-lock.json
 # /server/model/config.json
 # /server/middleware/hashS.json
-# /server/upload
+/server/upload
 # /server/middleware/aws.json
+.DS_Store
