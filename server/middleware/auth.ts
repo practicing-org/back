@@ -99,7 +99,6 @@ const makeTokenForDataUpdate = async (req:Request, res:Response, next:NextFuncti
         res.status(500).json({
             message:"server can't make token"
         })
-        return;
     }
 }
 const checkTokenForDataUpdate = async (req:Request, res:Response, next:NextFunction)=>{
@@ -127,7 +126,6 @@ const checkTokenForDataUpdate = async (req:Request, res:Response, next:NextFunct
         res.status(500).json({
             message:"server can't decode token"
         })
-        return
     }
     
 }

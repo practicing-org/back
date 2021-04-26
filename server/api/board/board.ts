@@ -4,9 +4,11 @@ import authmiddleware from '../../middleware/auth';
 import upload from '../../middleware/multer';
 import showBoard from './func/show board';
 import likeBoard from './func/like board';
+import deleteBoard from './func/delete board';
 const board = Router();
 
 board.post('/board', authmiddleware.checkTokenForSignin, upload.array('files'), authmiddleware.checkTokenForSignin, makeboard)//upload 전 에서 req.body를 못 받아옴...하
 board.get('/board', authmiddleware.checkTokenForSignin, showBoard);
 board.post('/board/like/:boardId', authmiddleware.checkTokenForSignin, likeBoard);
+board.delete("/board", authmiddleware.checkTokenForSignin, deleteBoard);
 export default board;

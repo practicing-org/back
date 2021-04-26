@@ -41,10 +41,10 @@ export default async (req:Request,res:Response, next:NextFunction)=>{
 
 			findBoard[i].user = {userName: boardUser.name, profile:profile.filename, gender:user.genderId};
 
+			findBoard[i].canDelete = false;
+
 			if(findBoard[i].user_Id == user.user_Id){
-				findBoard[i].canDelete == true;
-			}else{
-				findBoard[i].canDelete == false;
+				findBoard[i].canDelete = true;
 			}
 			// const boardImage = await db.image.findAll({raw:true, attributes:['filename'], where:{boardId:findBoard[i].boardId}})
 			// findBoard[i].images = boardImage;

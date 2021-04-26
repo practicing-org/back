@@ -3,7 +3,8 @@ import db from '../../../model/dbcon';
 import {Op, Sequelize} from 'sequelize';
 
 export default async(req:Request, res:Response, next:NextFunction)=>{
-  const {user_Ids, user}:any = req.query;
+  let {user_Ids}:any = req.query;
+  const {user}:any = req.params;
   const userId:string = req.body.userId;
   if(!user||!userId||!user_Ids){
     console.log('you send null');
@@ -11,11 +12,16 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
       result:0,
       message:'you send null'
     })
+    return;
+  }
+  if (user_Ids == -1){
+    user_Ids = [-1]
   }
   let valueArray = user.split(' ');
   let value = '';
   value = valueArray.join("|");
 
+  console.log(value)
   try{
     const User = await db.user.findOne({raw:true, attributes:['user_Id'], where:{userId:userId}})
 

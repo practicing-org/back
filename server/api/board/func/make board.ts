@@ -43,9 +43,22 @@ export default async (req:Request, res:Response, next:NextFunction)=>{
             })
         }
         const findBoard = await db.board.findOne({raw:true, where:{boardId: makeNewBoard.dataValues.boardId}})
+        let Profile = await db.image.findOne({raw:true, attributes:["filename"], where:{user_Id:findBoard.user_Id, profile:1}})
+			
+        if(Profile == null){
+            Profile = {};
+            Profile.filename = 0;
+        }
+
+        findBoard.user = {userName: user.name, profile:Profile.filename, gender:user.genderId};
+
+        findBoard.canDelete = true;
+        findBoard.likeNum = 0;
+        findBoard.like = false;
+
         res.json({
             result:1,
-            findBoard:findBoard
+            findBoard
         })
     }catch(err){
         console.log(err);
