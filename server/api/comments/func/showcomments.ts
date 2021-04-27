@@ -19,6 +19,9 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
     if(!commentsId){
         commentsId = null
     }
+    if(!Array.isArray(comments_Ids)){
+        comments_Ids = [comments_Ids];
+    }
     try{
         const User = await db.user.findOne({raw:true, attributes:["user_Id"], where:{userId:userId}})
         let comments = await db.comments.findAll({raw:true, include:[{model:db.image, required: false, attributes:["filename"]}],
