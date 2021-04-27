@@ -3,7 +3,7 @@ import db from '../../../model/dbcon';
 import path from 'path';
 
 export default async(req:Request, res:Response, next:NextFunction)=>{
-    const {userId, comment, boardId, commentsId} = req.body;
+    const {userId, comment, boardId} = req.body;
     const file:any = req.file;
 
     if(!userId||!comment||!boardId){
@@ -16,7 +16,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
     }
     try{
         const user = await db.user.findOne({raw:true, where:{userId:userId}});
-        const writeComments = await db.comments.create({user_Id:user.user_Id, comment:comment, boardId:Number(boardId), FcommentsId:commentsId != 'null' ?Number(commentsId):null});
+        const writeComments = await db.comments.create({user_Id:user.user_Id, comment:comment, boardId:boardId});
         if(file){
             await db.image.create({
                 filename: file.location,
