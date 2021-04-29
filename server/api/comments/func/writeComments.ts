@@ -8,7 +8,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
 
     if(!userId||!comment||!boardId){
         console.log("client send null");
-        res.status(401).json({
+        res.status(400).json({
             message:"client send null",
             result:0
         })
