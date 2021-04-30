@@ -4,8 +4,8 @@ import {QueryTypes, Sequelize, Op} from 'sequelize';
 
 export default async(req:Request, res:Response, next:NextFunction)=>{
     let {boardIds }:any = req.query;
-    let (selectuser):any = req.params;
-    
+    let {selectuser}:any = req.params;
+
     console.log(boardIds, selectuser)
     boardIds = JSON.parse(boardIds);
     selectuser = JSON.parse(selectuser);
