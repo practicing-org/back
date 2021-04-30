@@ -16,7 +16,7 @@ const checkTokenForSignin = async (req:Request, res:Response, next:NextFunction)
             
             if(err){
                 console.log("err = \n", err);
-                res.status(403).json({
+                res.status(401).json({
                     message:"your token is wrong"
                 })
                 return;
@@ -37,7 +37,7 @@ const checkTokenForSignin = async (req:Request, res:Response, next:NextFunction)
 
 const makeTokenForSignin = async (req:Request, res:Response, next:NextFunction)=>{
     const {userId,long} = req.body;
-    let day:number = 1;
+    let day:number = 30;
     if(long){
         day = 30;
     }
