@@ -31,6 +31,12 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
             const user = await db.user.findOne({raw:true, attributes:[["genderId","gender"],"name"], where:{user_Id:comments[i].user_Id}})
             let profile = await db.image.findOne({raw:true, attributes:["filename"], where:{user_Id:comments[i].user_Id, profile:1}})
 
+            comments[i].canDelete = false;
+
+			if(comments[i].user_Id == user.user_Id){
+				comments[i].canDelete = true;
+			}
+
             if(profile === null){
                 profile = {};
                 profile.filename = 0;
