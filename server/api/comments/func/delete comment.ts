@@ -14,7 +14,7 @@ export default async (req:Request, res:Response, next:NextFunction)=>{
   }
   try{
     const user = await db.user.findOne({raw:true, where:{userId:userId}});
-    const comment = await db.comment.findOne({raw:true, where:{commentsId:commentsId, user_Id:user.user_Id}});
+    const comment = await db.comments.findOne({raw:true, where:{commentsId:commentsId, user_Id:user.user_Id}});
 
     if(comment == null){
       res.status(400).json({

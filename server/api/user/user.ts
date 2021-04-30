@@ -16,5 +16,5 @@ user.post('/autosignin',auth.checkTokenForSignin, auth.makeTokenForSignin);
 user.get('/user/updateToken', auth.checkTokenForSignin, hashmiddleware.hash, signin, auth.makeTokenForDataUpdate);
 user.put('/user', hashmiddleware.hash, auth.checkTokenForDataUpdate, dataupdate);
 user.get('/yourProfile', auth.checkTokenForSignin, getUser);
-user.get('/user',auth.checkTokenForSignin, showuser);
+user.get('/user/:selectuser',auth.checkTokenForSignin, showuser);
 export default user;
