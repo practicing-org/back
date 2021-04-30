@@ -7,13 +7,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
     let {selectuser}:any = req.params;
 
     console.log(boardIds, selectuser)
-    boardIds = JSON.parse(boardIds);
-    selectuser = JSON.parse(selectuser);
-
     const userId = req.body.userId;
-
-
-    
 
     if(!userId||!selectuser||!boardIds){
         console.log('you send null');
