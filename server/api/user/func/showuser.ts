@@ -6,12 +6,10 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
     let {boardIds }:any = req.query;
     let {selectuser}:any = req.params;
 
-    console.log(boardIds, selectuser)
+    console.log(boardIds)
     const userId = req.body.userId;
 
-    if(!Array.isArray(boardIds)){
-        boardIds = [boardIds]
-    }
+    boardIds = JSON.parse(boardIds);
 
     if(!userId||!selectuser||!boardIds){
         console.log('you send null');
