@@ -39,11 +39,11 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
             let findBoard = await db.board.findAll({raw:true, where:{user_Id:selectUser.user_Id, boardId:{[Op.notIn]:boardIds}},order:[["boardId","desc"]], limit:5});
             for(let i = 0; i < findBoard.length; i++){
 
-                findBoard[i].user = {user_id:selectUser.user_Id,userName: selectUser.name, profile:profile.filename};
+                findBoard[i].user = {userName: selectUser.name, profile:profile.filename,gender:user.genderId};
 
                 findBoard[i].canDelete = true;
 
-                const boardImage = await db.image.findAll({raw:true, attributes:[[Sequelize.fn('GROUP_CONCAT',Sequelize.col("filename")),'filename']], where:{boardId:findBoard[i].boardId}})
+                const boardImage = await db.image.findOne({raw:true, attributes:[[Sequelize.fn('GROUP_CONCAT',Sequelize.col("filename")),'filename']], where:{boardId:findBoard[i].boardId}})
                 findBoard[i].images = boardImage.filename;
 
                 let likeNum = await db.like.findOne({raw:true, attributes:[[Sequelize.fn('COUNT', Sequelize.col('*')), 'number']], where:{boardId: findBoard[i].boardId}})
@@ -75,7 +75,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
         )
 
         for(let i = 0; i < findBoard.length; i++){
-            findBoard[i].user = {user_id:selectUser.user_Id,userName: selectUser.name, profile:profile.filename};
+            findBoard[i].user = {userName: selectUser.name, profile:profile.filename, gender:user.genderId};
 
             findBoard[i].canDelete = false;
 
