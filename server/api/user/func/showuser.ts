@@ -62,7 +62,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
         
         
         //공계범위가 전체인 글과 친구의 글 내가쓴 글에서 이미 로드된 글을 제외한 20글들  
-        const query = "select board.*, GROUP_CONCAT(file.filename) as images from board left outer join file using(boardId) where board.boardId not in"+board_Ids+" GROUP BY board.boardId order by boardId desc limit 5"
+        const query = "select board.*, GROUP_CONCAT(file.filename) as images from board left outer join file using(boardId) where board.boardId not in"+board_Ids+" and user_Id = :selectuser_Id GROUP BY board.boardId order by boardId desc limit 5"
         let findBoard:any;
         await db.sequelize.query(query, {replacements: {user_Id:user.user_Id, selectuser_Id:selectuser}}, { type: QueryTypes.SELECT }).then(
             function (result:any){
