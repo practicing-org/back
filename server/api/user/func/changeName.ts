@@ -2,23 +2,26 @@ import {Request, Response, NextFunction} from 'express';
 import db from '../../../model/dbcon';
 
 export default async(req:Request, res:Response, next:NextFunction)=>{
-    let { name, hashPassword} = req.query;
+    let {name} = req.body;
     let userId = req.body.userId;
+    console.log(name);
     try{
         const finduser = await db.user.findOne({raw:true, where:{userId:userId}});
-        if(!userId){
+        if(finduser == null){
             console.log('userId is null');
-            res.status(401).json({
+            res.status(400).json({
+                message:'존재하지 않는 유저'
+            })
+            return;
+        }
+        if(!userId|| !name){
+            console.log('userId is null');
+            res.status(400).json({
                 message:'you didn`t send your id'
             })
             return;
         }
-        if(!hashPassword)
-        hashPassword = finduser.password;
-        if(!name)
-            name = finduser.name;
-
-        await db.user.update({name:name, password:hashPassword},{where:{userId:userId}})
+        await db.user.update({name:name},{where:{userId:userId}})
         res.json({
             result:1
         })
