@@ -8,7 +8,7 @@ export default async (req:Request, res:Response, next:NextFunction)=>{
   console.log(boardId, userId);
   if(boardId == null){
     console.log("null")
-    res.status(400).json({
+    res.status(403).json({
       message:"null 불가능",
       result:0
     })
