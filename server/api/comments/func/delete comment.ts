@@ -26,11 +26,12 @@ export default async (req:Request, res:Response, next:NextFunction)=>{
     }
 
     await db.board.destroy({where:{commentsId:commentsId, user_Id:user.user_Id}});
+
     res.status(200).json({
       message:"성공",
-      result:1
+      result:1,
+      commentsId
     })
-
   }catch(err){
     console.log(err);
     res.status(500).json({

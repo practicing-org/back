@@ -32,7 +32,8 @@ export default async (req:Request, res:Response, next:NextFunction)=>{
     await db.board.destroy({where:{boardId:boardId, user_Id:user.user_Id}});
     res.status(200).json({
       message:"성공",
-      result:1
+      result:1,
+      boardId
     })
 
   }catch(err){
