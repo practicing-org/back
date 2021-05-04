@@ -4,7 +4,8 @@ import db from '../../../model/dbcon';
 
 
 export default async (req:Request, res:Response, next:NextFunction)=>{
-  const {commentsId, userId} = req.body;
+  const {userId} = req.body;
+  const {commentsId} = req.query;
   if(commentsId == null){
     res.status(400).json({
       message:"null 불가능",

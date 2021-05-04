@@ -17,7 +17,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
         if(!userId|| !name){
             console.log('userId is null');
             res.status(400).json({
-                message:'you didn`t send your id'
+                message:'you send null'
             })
             return;
         }

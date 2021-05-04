@@ -4,7 +4,8 @@ import db from '../../../model/dbcon';
 
 
 export default async (req:Request, res:Response, next:NextFunction)=>{
-  const {boardId, userId} = req.body;
+  const {userId} = req.body;
+  const {boardId} = req.query;
   console.log(boardId, userId);
   if(boardId == null){
     console.log("null")
