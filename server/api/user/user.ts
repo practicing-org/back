@@ -16,7 +16,7 @@ user.get('/user/idCheck',idCheck);
 user.post('/autosignin',auth.checkTokenForSignin, auth.makeTokenForSignin);
 user.get('/user/updateToken', auth.checkTokenForSignin, hashmiddleware.hash, signin, auth.makeTokenForDataUpdate);
 user.put('/user/change/name', auth.checkTokenForSignin, changeName);
-user.put("/user/change/password", auth.checkTokenForSignin, hashmiddleware.hash, changePassword);
+user.put("/user/change/password", auth.checkTokenForSignin, changePassword);
 user.get('/yourProfile', auth.checkTokenForSignin, getUser);
 user.get('/user/:selectuser',auth.checkTokenForSignin, showuser);
 export default user;
