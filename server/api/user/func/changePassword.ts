@@ -3,17 +3,20 @@ import db from '../../../model/dbcon';
 import crypto from 'crypto';
 
 export default async(req:Request, res:Response, next:NextFunction)=>{
-    let {hashPassword, changePassword}:any = req.query;
+    let {password, changePassword}:any = req.query;
     let userId = req.body.userId;
     try{
-        if(!userId|| !changePassword){
+        if(!userId|| !changePassword || !password){
             console.log('userId is null');
-            res.status(401).json({
+            res.status(400).json({
                 result:0,
-                message:'you didn`t send your id'
+                message:'you send null'
             })
             return;
         }
+
+        let hashPassword = crypto.createHash('sha256').update(password).digest('hex');
+        
         const finduser = await db.user.findOne({raw:true, where:{userId:userId,password:hashPassword}});
         if(finduser == null){
           console.log('userId is null');
