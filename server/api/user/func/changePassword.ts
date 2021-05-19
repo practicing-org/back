@@ -16,8 +16,9 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
         }
 
         let hashPassword = crypto.createHash('sha256').update(password).digest('hex');
-        
+
         const finduser = await db.user.findOne({raw:true, where:{userId:userId,password:hashPassword}});
+        console.log(finduser);
         if(finduser == null){
           console.log('userId is null');
           res.status(400).json({

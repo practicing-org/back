@@ -7,6 +7,7 @@ const checkTokenForSignin = async (req:Request, res:Response, next:NextFunction)
     console.log(token)
     if(token == ''){
         res.status(403).json({
+            result:0,
             err:"notoken"
         })
         return;
@@ -17,6 +18,7 @@ const checkTokenForSignin = async (req:Request, res:Response, next:NextFunction)
             if(err){
                 console.log("err = \n", err);
                 res.status(401).json({
+                    result:0,
                     message:"your token is wrong"
                 })
                 return;
@@ -28,6 +30,7 @@ const checkTokenForSignin = async (req:Request, res:Response, next:NextFunction)
     } catch(err){
         console.log(err);
         res.status(500).json({
+            result:0,
             message:"server can't decode token"
         })
         return
@@ -52,6 +55,7 @@ const makeTokenForSignin = async (req:Request, res:Response, next:NextFunction)=
             if(err){
                 console.log(err);
                 res.status(500).json({
+                    result:0,
                     message:"server can't make token"
                 })
                 return;
@@ -59,12 +63,14 @@ const makeTokenForSignin = async (req:Request, res:Response, next:NextFunction)=
             console.log('token')
             res.json({
                 token,
-                result:1
+                result:1,
+                message:"성공",
             })
         })
     } catch(err){
         console.log(err);
         res.status(500).json({
+            result:0,
             message:"server can't make token"
         })
         return
@@ -83,6 +89,7 @@ const makeTokenForDataUpdate = async (req:Request, res:Response, next:NextFuncti
             if(err){
                 console.log(err);
                 res.status(500).json({
+                    result:0,
                     message:"server can't make token"
                 })
                 return;
@@ -90,7 +97,8 @@ const makeTokenForDataUpdate = async (req:Request, res:Response, next:NextFuncti
             console.log('server make token');
             res.json({
                 tokenForUpdate:token,
-                result:1
+                result:1,
+                message:"성공",
             })
             return
         })
@@ -106,7 +114,8 @@ const checkTokenForDataUpdate = async (req:Request, res:Response, next:NextFunct
     const token = req.headers['authorization']
     if(!token){
         return res.status(403).json({
-            err:"notoken"
+            result:0,
+            message:"token is null"
         })
     }
     try{
@@ -115,6 +124,7 @@ const checkTokenForDataUpdate = async (req:Request, res:Response, next:NextFunct
             if(err){
                 console.log("err = \n", err);
                 res.status(400).json({
+                    result:0,
                     message:"your token is wrong"
                 })
                 return
@@ -124,6 +134,7 @@ const checkTokenForDataUpdate = async (req:Request, res:Response, next:NextFunct
     } catch(err){
         console.log(err);
         res.status(500).json({
+            result:0,
             message:"server can't decode token"
         })
     }

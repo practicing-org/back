@@ -22,6 +22,7 @@ const hash = async (req:Request, res:Response, next:NextFunction) =>{
             result:0,
             message:'password is null'
         })
+        return;
     }
 }
 

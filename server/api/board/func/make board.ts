@@ -21,6 +21,7 @@ export default async (req:Request, res:Response, next:NextFunction)=>{
         const Show = await db.show.findOne({raw:true, where:{showId:show}});
         if(!Show){
             res.status(401).json({
+                result:0,
                 message:"server can't find showtype"
             })
             return;
@@ -58,6 +59,7 @@ export default async (req:Request, res:Response, next:NextFunction)=>{
 
         res.json({
             result:1,
+            message:"성공",
             findBoard
         })
     }catch(err){

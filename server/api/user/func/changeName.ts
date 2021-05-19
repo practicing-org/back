@@ -15,7 +15,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
             return;
         }
         const finduser = await db.user.findOne({raw:true, where:{userId:userId}});
-        if(finduser == null){
+        if(!finduser){
             console.log('finUser is null');
             res.status(400).json({
                 result:0,
