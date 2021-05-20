@@ -17,13 +17,21 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
 
         let hashPassword = crypto.createHash('sha256').update(password).digest('hex');
 
-        const finduser = await db.user.findOne({raw:true, where:{userId:userId,password:hashPassword}});
+        const finduser = await db.user.findOne({raw:true, where:{userId:userId}});
         console.log(finduser);
         if(finduser == null){
-          console.log('userId is null');
+          console.log('findUser is null');
           res.status(400).json({
               result:0,
               message:'존재하지 않는 유저'
+          })
+          return;
+        }
+        if(finduser.password != hashPassword){
+            console.log('비밀 번호가 다름');
+          res.status(400).json({
+              result:0,
+              message:'비밀 번호가 다름'
           })
           return;
         }

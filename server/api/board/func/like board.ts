@@ -24,7 +24,8 @@ export default async(req:Request, res:Response,next:NextFunction)=>{
     }
 
     res.json({
-      result:1
+      result:1,
+      message:"성공"
     })
   }catch(err){
     console.log(err);

@@ -34,7 +34,8 @@ if(!findGender){
 }
 await db.user.create({userId:userId, password:hashPassword, name:name, genderId:genderId})
 res.json({
-    result:1
+    result:1,
+    message:"성공",
 })
 
 } catch (err){

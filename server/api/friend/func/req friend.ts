@@ -10,7 +10,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
         console.log('client send null');
         res.status(400).json({
             message:"you send null",
-            result:1
+            result:0
         })
         return;
     }
@@ -32,11 +32,13 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
             await db.friend.destroy({where:{[Op.or]:[{user_Id:user.user_Id, friend:friendId}, {user_Id:friendId, friend:user.user_Id}]} })
         }
         res.json({
-            result:1
+            result:1,
+            message:"성공",
         })
     } catch(err){
         console.log(err);
         res.status(500).json({
+            result:0,
             message:"server has error now"
         })
     }

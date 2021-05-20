@@ -53,11 +53,14 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
             comments[i].like = !!like;
         }
         res.json({
+            result:1,
+            message:"성공",
             comments
         })
     } catch(err){
         console.log(err);
         res.status(500).json({
+            result:0,
             message:"server has error now"
         })
     }

@@ -57,6 +57,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
     }
     res.json({
       result:1,
+      message:"성공",
       findUser
     })
   }catch(err){
