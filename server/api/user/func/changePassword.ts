@@ -8,11 +8,10 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
     try{
         if(!userId|| !changePassword || !password){
             console.log('userId is null');
-            res.status(400).json({
+            return res.status(400).json({
                 result:0,
                 message:'you send null'
             })
-            return;
         }
 
         let hashPassword = crypto.createHash('sha256').update(password).digest('hex');
@@ -21,19 +20,17 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
         console.log(finduser);
         if(finduser == null){
           console.log('findUser is null');
-          res.status(400).json({
+          return res.status(400).json({
               result:0,
               message:'존재하지 않는 유저'
           })
-          return;
         }
         if(finduser.password != hashPassword){
             console.log('비밀 번호가 다름');
-          res.status(400).json({
-              result:0,
-              message:'비밀 번호가 다름'
-          })
-          return;
+            return res.status(400).json({
+                result:0,
+                message:'비밀번호가 다름'
+            })
         }
     
         let HashChangePassword = crypto.createHash('sha256').update(changePassword).digest('hex');

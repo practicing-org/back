@@ -20,7 +20,7 @@ export default async (req:Request, res:Response, next:NextFunction)=>{
         const user = await db.user.findOne({raw:true, where:{userId:userId}})
         const Show = await db.show.findOne({raw:true, where:{showId:show}});
         if(!Show){
-            res.status(401).json({
+            res.status(400).json({
                 result:0,
                 message:"server can't find showtype"
             })
@@ -65,6 +65,7 @@ export default async (req:Request, res:Response, next:NextFunction)=>{
     }catch(err){
         console.log(err);
         res.status(502).json({
+            result:0,
             message:"server has error now"
         })
         return;
