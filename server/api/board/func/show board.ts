@@ -36,7 +36,7 @@ export default async (req:Request,res:Response, next:NextFunction)=>{
 			
 			if(profile == null){
 				profile = {};
-				profile.filename = 0;
+				profile.filename = null;
 			}
 
 			findBoard[i].user = {userName: boardUser.name, profile:profile.filename, gender:user.genderId};

@@ -13,7 +13,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
 
     if(!profile){
       profile = {};
-      profile.profile = 0;
+      profile.profile = null;
     }
 
     user.profile = profile.profile;

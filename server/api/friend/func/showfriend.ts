@@ -12,8 +12,12 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
         let findfriend = await db.sequelize.query(query, {replacements:{user_Id:user_Id},type:QueryTypes.SELECT, raw:true});
 
         for(let i = 0; i < findfriend.length; i++){
-            const query = 'select ifnull(0,filename) as profile from file where profile = 1 and user_Id = :user_Id';
-            const profile = await db.sequelize.query(query, {replacements:{user_Id:findfriend[i].user_Id}, type:QueryTypes.SELECT, raw:true});
+            const query = 'select filename as profile from file where profile = 1 and user_Id = :user_Id';
+            let profile = await db.sequelize.query(query, {replacements:{user_Id:findfriend[i].user_Id}, type:QueryTypes.SELECT, raw:true});
+            if(!profile){
+                profile = {}
+                profile.profile = null;
+            }
             findfriend[i].profile = profile.profile;
         }
         res.json({

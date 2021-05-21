@@ -39,7 +39,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
 
             if(profile === null){
                 profile = {};
-                profile.filename = 0;
+                profile.filename = null;
             }
             comments[i].user = {name:user.name, profile:profile.filename, gender:user.genderId}
 
