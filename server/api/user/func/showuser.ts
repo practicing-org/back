@@ -29,7 +29,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
 
         if(profile === null){
             profile = {};
-            profile.filename = 0;
+            profile.filename = null;
         }
         selectUser.profile = profile.filename;
 

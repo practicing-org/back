@@ -10,7 +10,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
         console.log('client send null');
         res.status(400).json({
             message:"you send null",
-            result:0
+            result:0 
         })
         return;
     }
