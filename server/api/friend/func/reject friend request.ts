@@ -7,7 +7,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
     const friendId = req.query.friend;
     console.log(userId, friendId);
     if(!userId && !friendId){
-        console.log('client send null');
+        console.log('clientjh send null');
         res.status(400).json({
             message:"you send null",
             result:0 

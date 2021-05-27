@@ -20,7 +20,7 @@ export default async (req:Request,res:Response, next:NextFunction)=>{
 	const board_Ids = "("+boardIds.join()+")";
 	console.log(board_Ids)
 	//공계범위가 전체인 글과 친구의 글 내가쓴 글에서 이미 로드된 글을 제외한 20글들  
-	const query = "select board.*, GROUP_CONCAT(file.filename) as images from board left outer join file using(boardId) where board.boardId not in"+board_Ids+" GROUP BY board.boardId order by boardId desc limit 4"
+	const query = "select board.*, GROUP_CONCAT(file.filename) as images from board left outer join file using(boardId) where board.boardId not in"+board_Ids+" GROUP BY board.boardId order by boardId desc limit 8"
 
 	try{
 		
