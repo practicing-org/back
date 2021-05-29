@@ -19,8 +19,7 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
         const user = await db.user.findOne({raw:true, where:{userId:userId}})
 
         console.log(user);
-        const findFriendUserId = await db.friend.findOne({raw:true, where:{user_Id:user.user_Id, friend:friendId}})
-        const findFriendFriend = await db.friend.findOne({raw:true, where:{user_Id:friendId, friend:user.user_Id}})
+        const [findFriendUserId,findFriendFriend] = await Promise.all([db.friend.findOne({raw:true, where:{user_Id:user.user_Id, friend:friendId}}),db.friend.findOne({raw:true, where:{user_Id:friendId, friend:user.user_Id}})]);
         console.log(findFriendUserId, findFriendFriend)
         if(!findFriendUserId){
             await db.friend.create({user_Id:user.user_Id, friend:friendId, date:Date.now()});

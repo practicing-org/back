@@ -31,9 +31,11 @@ export default async (req:Request,res:Response, next:NextFunction)=>{
 	}
 	for(let i = 0; i < findBoard.length; i++){
 			//userName and profile
-			const boardUser = await db.user.findOne({raw:true, attributes:["name","genderId"], where:{user_Id:findBoard[i].user_Id}})
-			let profile = await db.image.findOne({raw:true, attributes:["filename"], where:{user_Id:findBoard[i].user_Id, profile:1}})
-			
+			let [boardUser, profile,likeNum,like] : any = await Promise.all([db.user.findOne({raw:true, attributes:["name","genderId"], where:{user_Id:findBoard[i].user_Id}}),
+																														db.image.findOne({raw:true, attributes:["filename"], where:{user_Id:findBoard[i].user_Id, profile:1}}),
+																														db.like.findOne({raw:true, attributes:[[Sequelize.fn('COUNT', Sequelize.col('*')), 'number']], where:{boardId: findBoard[i].boardId}}),
+																														db.like.findOne({raw:true, where:{user_Id:user.user_Id, boardId:findBoard[i].boardId}})]);
+
 			if(profile == null){
 				profile = {};
 				profile.filename = null;
@@ -46,14 +48,10 @@ export default async (req:Request,res:Response, next:NextFunction)=>{
 			if(findBoard[i].user_Id == user.user_Id){
 				findBoard[i].canDelete = true;
 			}
-			// const boardImage = await db.image.findAll({raw:true, attributes:['filename'], where:{boardId:findBoard[i].boardId}})
-			// findBoard[i].images = boardImage;
 			
-			let likeNum = await db.like.findOne({raw:true, attributes:[[Sequelize.fn('COUNT', Sequelize.col('*')), 'number']], where:{boardId: findBoard[i].boardId}})
 			findBoard[i].likeNum = likeNum.number;
 
 
-			const like = await db.like.findOne({raw:true, where:{user_Id:user.user_Id, boardId:findBoard[i].boardId}})
 			findBoard[i].like = !!like;
 		}
 

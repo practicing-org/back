@@ -17,8 +17,8 @@ export default async (req:Request, res:Response, next:NextFunction)=>{
         return;
     }
     try{
-        const user = await db.user.findOne({raw:true, where:{userId:userId}})
-        const Show = await db.show.findOne({raw:true, where:{showId:show}});
+        const [user, Show] :any = Promise.all([db.user.findOne({raw:true, where:{userId:userId}}), db.show.findOne({raw:true, where:{showId:show}})]);
+      
         if(!Show){
             res.status(400).json({
                 result:0,

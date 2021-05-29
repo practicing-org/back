@@ -28,9 +28,12 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
         where:{boardId:boardId, FcommentsId:commentsId, commentsId:{[Op.notIn]:comments_Ids}}, limit:10, order:[["commentsId","desc"]]});
         console.log(comments)
         for(let i = 0; i < comments.length; i++){
-            const user = await db.user.findOne({raw:true, attributes:[["genderId","gender"],"name"], where:{user_Id:comments[i].user_Id}})
-            let profile = await db.image.findOne({raw:true, attributes:["filename"], where:{user_Id:comments[i].user_Id, profile:1}})
-
+            let [user, profile,childComments,likeNum,like] : any = Promise.all([db.user.findOne({raw:true, attributes:[["genderId","gender"],"name"], where:{user_Id:comments[i].user_Id}}),
+                                                                                db.image.findOne({raw:true, attributes:["filename"], where:{user_Id:comments[i].user_Id, profile:1}}),
+                                                                                db.comments.findOne({raw:true, attributes:[[Sequelize.fn('COUNT', Sequelize.col('*')), 'child']], where:{FcommentsId: comments[i].commentsId}}),
+                                                                                db.like.findOne({raw:true, attributes:[[Sequelize.fn('COUNT', Sequelize.col('*')), 'number']], where:{commentsId: comments[i].commentsId}}),
+                                                                                db.like.findOne({raw:true, where:{user_Id:User.user_Id, commentsId:comments[i].commentsId}})]);
+            
             comments[i].canDelete = false;
 
 			if(comments[i].user_Id == user.user_Id){
@@ -43,13 +46,10 @@ export default async(req:Request, res:Response, next:NextFunction)=>{
             }
             comments[i].user = {name:user.name, profile:profile.filename, gender:user.genderId}
 
-            let childComments = await db.comments.findOne({raw:true, attributes:[[Sequelize.fn('COUNT', Sequelize.col('*')), 'child']], where:{FcommentsId: comments[i].commentsId}})
             comments[i].childComments = childComments.child
 
-            let likeNum = await db.like.findOne({raw:true, attributes:[[Sequelize.fn('COUNT', Sequelize.col('*')), 'number']], where:{commentsId: comments[i].commentsId}})
             comments[i].likeNum = likeNum.number;
 
-            const like = await db.like.findOne({raw:true, where:{user_Id:User.user_Id, commentsId:comments[i].commentsId}})
             comments[i].like = !!like;
         }
         res.json({
