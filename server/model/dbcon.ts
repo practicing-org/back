@@ -26,13 +26,14 @@ import Board from './table/board';
 import Show from './table/show';
 import Gender from './table/gender'
 
+db.gender = Gender(db.sequelize, db.Sequelize);
 db.user = User(db.sequelize,db.Sequelize);
+db.show = Show(db.sequelize, db.Sequelize);
 db.board = Board(db.sequelize, db.Sequelize);
 db.comments = Comments(db.sequelize, db.Sequelize);
-db.show = Show(db.sequelize, db.Sequelize);
 db.like = Like(db.sequelize, db.Sequelize);
 db.image = Image(db.sequelize, db.Sequelize);
-db.gender = Gender(db.sequelize, db.Sequelize);
+
 
 
 //relationship

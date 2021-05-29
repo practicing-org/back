@@ -1,8 +1,8 @@
 /node_modules
 /build
 /package-lock.json
-# /server/model/config.json
-# /server/middleware/hashS.json
+/server/model/config.json
+/server/middleware/hashS.json
 /server/upload
-# /server/middleware/aws.json
+/server/middleware/aws.json
 .DS_Store
